@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
 
-@Component ({
-    selector: 'civic-hq',
-    templateUrl: 'app/views/app-component.html'
+@Component({
+  selector: 'civiqhq-app',
+  templateUrl: 'app/app.component.html'
 })
 
-export /**
- * AppComponent
- */
-class AppComponent {
-    
+export class AppComponent { 
+    title = 'Centrul civic';
 }
