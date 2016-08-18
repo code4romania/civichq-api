@@ -1,1 +1,25 @@
 <h1>Home component</h1>
+<div *ngFor="let cat of categories">
+    <div (click)="onSelectCategory(cat)">
+        <span>{{ cat.CatName }}</span>
+    </div>
+
+</div>
+
+<br/>
+<br/><br/><br/>
+
+<div *ngFor = "let cat of categories">
+    
+    <div>
+        <span><h3>{{ cat.CatName }}</h3></span>
+    </div>
+    <div *ngFor = "let app of apps">
+        <div *ngIf = "app.CategoryName === cat.CatName">
+            
+            <span> {{ app.AppName }}</span>
+
+        </div>
+    </div>
+
+</div>
