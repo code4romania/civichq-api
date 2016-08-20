@@ -1,7 +1,7 @@
 <h1>Home component</h1>
 <div *ngFor="let cat of categories">
     <div (click)="onSelectCategory(cat)">
-        <span>{{ cat.CatName }}</span>
+        <span>{{ cat.catname }}</span>
     </div>
 
 </div>
@@ -12,10 +12,10 @@
 <div *ngFor = "let cat of categoriesForApps">
     
     <div>
-        <span><h3>{{ cat.CatName }}</h3></span>
+        <span><h3>{{ cat.catname }}</h3></span>
     </div>
     <div *ngFor = "let app of apps">
-        <div *ngIf = "app.CategoryName === cat.CatName">
+        <div *ngIf = "app.CategoryName === cat.catname">
             
             <span> {{ app.AppName }}</span>
 
