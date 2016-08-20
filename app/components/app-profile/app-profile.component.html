@@ -1,1 +1,11 @@
 <h1>App profile OR Despre centru</h1>
+
+<div id="#appDetails" *ngIf="app">
+    {{app.appdetail.name}}
+    <br/>
+
+    {{app.appdetail.hashtags}} ----- {{app.appdetail.categoryname}}
+    {{app.appdetail.facebook}} ----- {{app.appdetail.website}}
+
+
+</div>

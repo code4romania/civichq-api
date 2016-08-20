@@ -14,7 +14,7 @@ const appRoutes: Routes = [
         component: AddAppComponent
     },
     {
-        path: 'app-profile', //add /:id
+        path: 'app-profile/:id', //add /:id
         component: AppProfileComponent
     },
     {

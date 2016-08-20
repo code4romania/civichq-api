@@ -1,12 +1,13 @@
+import { CategoryService } from './../../shared/services/category.service';
+import { CategoryModel } from './../../shared/models/category.model';
 import { Component, OnInit } from '@angular/core';
 import { HomeService  } from './home.service';
-import { CategoryModel } from './category.model';
 import { ListAppModel } from './list-app.model';
 
 @Component({
   selector: 'home-component',
   templateUrl: 'app/components/home/home.component.html',
-  providers: [HomeService]
+  providers: [HomeService, CategoryService]
 })
 
 export class HomeComponent implements OnInit {
@@ -66,7 +67,7 @@ export class HomeComponent implements OnInit {
 
     let restOfItems: CategoryModel[];
     this.categoriesForApps = this.categories;
-    restOfItems = this.categoriesForApps.filter(x => x.Id != this.selectedCategory.Id);
+    restOfItems = this.categoriesForApps.filter(x => x.id != this.selectedCategory.id);
 
     return restOfItems;
 
