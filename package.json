@@ -2,6 +2,16 @@
   "name": "civiqhq",
   "version": "1.0.0",
   "scripts": {
+    "setup": "npm install -g browser-sync typescript@next typings node-sass && typings install",
+    "clean": "rm -rf dist && mkdir dist",
+    "build": "npm run clean && npm run build:ts && npm run build:sass",
+    "build:ts": "tsc",
+    "build:sass": "node-sass -o dist/ app/",
+    "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
+    "watch": "npm run clean && concurrent \"npm run watch:ts\" \"npm run watch:sass\"",
+    "watch:ts": "tsc --watch",
+    "watch:sass": "npm run build:sass && node-sass -o dist/ -w app/",
+    "dev": "concurrent \"npm run watch\" \"browser-sync start --server --files 'dist/**/*.css, index.html, dist/**/*.js'\" \"npm run lite\"",
     "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
     "lite": "lite-server",
     "postinstall": "typings install",
@@ -32,6 +42,7 @@
   "devDependencies": {
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
+    "node-sass": "^3.4.2",
     "typescript": "^1.8.10",
     "typings":"^1.0.4"
   }
