@@ -12,7 +12,7 @@
     "watch:ts": "tsc --watch",
     "watch:sass": "npm run build:sass && node-sass -o dist/ -w app/",
     "dev": "concurrent \"npm run watch\" \"browser-sync start --server --files 'dist/**/*.css, index.html, dist/**/*.js'\" \"npm run lite\"",
-    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" \"npm run watch\"  ",
     "lite": "lite-server",
     "postinstall": "typings install",
     "tsc": "tsc",

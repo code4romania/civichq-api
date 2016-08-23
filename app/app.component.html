@@ -1,7 +1,33 @@
-<a routerLink="/home">Centrul civic</a>
-<a routerLink="/app-profile/1">Despre centru</a>
-<a routerLink="/add-app">Adauga App</a>
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Centrul Civic</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav  navbar-right">
+                    <li><a routerLink="/app-profile/1">Despre centru</a></li>
+                    <li><a routerLink="/add-app">Adauga App</a></li>
+                    <li>
+                        <form class="navbar-form">
+                            <div class="form-group">
+                                <input #searchBox class="form-control" id="search-box" placeholder="Cauta"/>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
 
-<input #searchBox id="search-box" placeholder="cauta" />
-
-  <router-outlet></router-outlet>
+            </div>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+    <router-outlet></router-outlet>
+</header>
