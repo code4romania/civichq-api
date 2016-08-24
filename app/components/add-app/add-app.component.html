@@ -1,1 +1,55 @@
 <h1>Add App</h1>
+
+<div *ngIf="app">
+
+
+    <div id="appDetails">
+        <input [(ngModel)]="app.appdetail.name" placeholder="Numele aplicatiei" />
+        <br/>
+        <input [(ngModel)]="app.appdetail.website" placeholder="Website-ul aplicatiei">
+        <br/>
+        <input [(ngModel)]="app.appdetail.github" placeholder="Github link">
+        <br/>
+        <input [(ngModel)]="app.appdetail.facebook" placeholder="Pagina de Facebook a aplicatiei">
+        <br/>
+        <input [(ngModel)]="app.appdetail.creationdate" placeholder="Data crearii aplicatiei">
+        <br/>
+        <input [(ngModel)]="app.appdetail.logoname" placeholder="Upload logo">
+        <br/>
+        <input [(ngModel)]="app.appdetail.description" placeholder="Descrierea aplicatiei (1000 de caractere)">
+        <br/>
+        <input [(ngModel)]="app.appdetail.categoryid" placeholder="Alege domeniul">
+        <br/>
+        <input [(ngModel)]="app.appdetail.hashtags" placeholder="Alege un #hastag pentru aplicatia ta">
+
+    </div>
+    <br/><br/><br/>
+    <div id="ngoDetails">
+        <input [(ngModel)]="app.ngodetail.name" placeholder="Numele organizatiei" />
+        <br/>
+        <input [(ngModel)]="app.ngodetail.phone" placeholder="Telefon">
+        <br/>
+        <input [(ngModel)]="app.ngodetail.email" placeholder="Email">
+        <br/>
+        <input [(ngModel)]="app.ngodetail.facebook" placeholder="Facebook page">
+        <br/>
+        <input [(ngModel)]="app.ngodetail.googleplus" placeholder="G+">
+        <br/>
+        <input [(ngModel)]="app.ngodetail.linkedin" placeholder="LinkedIn page">
+        <br/>
+        <input [(ngModel)]="app.ngodetail.twitter" placeholder="Twitter">
+        <br/>
+        <input [(ngModel)]="app.ngodetail.Instagram" placeholder="Instagram">
+        <br/>
+        <input [(ngModel)]="app.ngodetail.description" placeholder="Descriere organizatie (500 de caractere)">
+        <br/>
+        <input [(ngModel)]="app.ngodetail.logoname" placeholder="Upload logo">
+    </div>
+
+    <br/><br/>
+
+    <div id="save" (click)="addApp()">
+        <span>Adauga aplicatie</span>
+    </div>
+
+</div>
