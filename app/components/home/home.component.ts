@@ -1,13 +1,15 @@
 import { CategoryService } from './../../shared/services/category.service';
 import { CategoryModel } from './../../shared/models/category.model';
 import { Component, OnInit } from '@angular/core';
+import {CategoryPipe} from './category-pipe';
 import { HomeService  } from './home.service';
 import { ListAppModel } from './list-app.model';
 
 @Component({
   selector: 'home-component',
   templateUrl: 'app/components/home/home.component.html',
-  providers: [HomeService, CategoryService]
+  providers: [HomeService, CategoryService],
+  pipes: [CategoryPipe  ]
 })
 
 export class HomeComponent implements OnInit {
@@ -19,6 +21,7 @@ export class HomeComponent implements OnInit {
 
 
   private selectedCategory: CategoryModel;
+  selected: number;
 
 
   constructor(private homeService: HomeService)
@@ -26,7 +29,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.homeService.getCategories()
-      .then(c => { this.categories = c; this.categoriesForApps = c; })
+      .then(c => {
+        this.categories = c;
+        this.categoriesForApps = c;
+        this.selected = 0;
+      })
       .catch(err => console.log(err));
 
     this.homeService.getTopChildrenForCategories()
@@ -38,6 +45,7 @@ export class HomeComponent implements OnInit {
 
   onSelectCategory(cat) {
     this.selectedCategory = cat;
+    this.selected = cat.id - 1;
 
     this.sortCategoriesForApps();
   }
