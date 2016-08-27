@@ -1,3 +1,20 @@
-#home-header {
-  color: red;
+@import "variables";
+.hero-banner {
+  padding: 80px 0;
+  background-color: $light-grey;
+  background-repeat: repeat;
+  text-align: center;
+  .categories {
+    .category {
+      &.selected {
+        background: $secondary;
+      }
+      background: $primary;
+      padding:20px 0;
+      margin-top: 15px;
+      color: $white;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  }
 }

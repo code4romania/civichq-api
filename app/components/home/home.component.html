@@ -1,27 +1,30 @@
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let cat of categories">
-            <button class="btn btn-default" (click)="onSelectCategory(cat)">
-                {{ cat.catname }}
-            </button>
-
-        </div>
-    </div>
-    <br/>
-    <br/><br/><br/>
-
-    <div *ngFor = "let cat of categoriesForApps">
-
-        <div>
-            <span><h3>{{ cat.catname }}</h3></span>
-        </div>
-        <div *ngFor = "let app of apps">
-            <div *ngIf = "app.CategoryName === cat.catname">
-
-                <span> {{ app.AppName }}</span>
-
+<div class="hero-banner">
+    <div class="container">
+        <div class="row categories">
+            <div  class="col-xs-12 col-sm-6 col-md-4 " *ngFor="let cat of categories ; let i=index" >
+                <div class="category" [class.selected]="i == selected"  (click)="onSelectCategory(cat)">
+                    <span class="category-name"> {{ cat.catname }}</span>
+                </div>
             </div>
         </div>
-
     </div>
 </div>
+<section class="app-grid">
+    <div class="container">
+        <div *ngFor="let cat of categoriesForApps">
+
+            <div>
+                <span><h3>{{ cat.catname }}</h3></span>
+            </div>
+            <div *ngFor="let app of apps">
+                <div *ngIf="app.CategoryName === cat.catname">
+
+                    <span> {{ app.AppName }}</span>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+

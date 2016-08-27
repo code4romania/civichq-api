@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
 
 
   private selectedCategory: CategoryModel;
+  selected: number;
 
 
   constructor(private homeService: HomeService)
@@ -26,7 +27,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.homeService.getCategories()
-      .then(c => { this.categories = c; this.categoriesForApps = c; })
+      .then(c => {
+        this.categories = c;
+        this.categoriesForApps = c;
+        this.selected = 0;
+      })
       .catch(err => console.log(err));
 
     this.homeService.getTopChildrenForCategories()
@@ -38,6 +43,7 @@ export class HomeComponent implements OnInit {
 
   onSelectCategory(cat) {
     this.selectedCategory = cat;
+    this.selected = cat.id - 1;
 
     this.sortCategoriesForApps();
   }
