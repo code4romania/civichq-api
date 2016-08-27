@@ -1,13 +1,15 @@
 import { CategoryService } from './../../shared/services/category.service';
 import { CategoryModel } from './../../shared/models/category.model';
 import { Component, OnInit } from '@angular/core';
+import {CategoryPipe} from './category-pipe';
 import { HomeService  } from './home.service';
 import { ListAppModel } from './list-app.model';
 
 @Component({
   selector: 'home-component',
   templateUrl: 'app/components/home/home.component.html',
-  providers: [HomeService, CategoryService]
+  providers: [HomeService, CategoryService],
+  pipes: [CategoryPipe  ]
 })
 
 export class HomeComponent implements OnInit {

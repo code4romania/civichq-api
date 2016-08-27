@@ -1,29 +1,27 @@
 <div class="hero-banner">
     <div class="container">
         <div class="row categories">
-            <div  class="col-xs-12 col-sm-6 col-md-4 " *ngFor="let cat of categories ; let i=index" >
-                <div class="category" [class.selected]="i == selected"  (click)="onSelectCategory(cat)">
+            <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let cat of categories ; let i=index">
+                <div class="category" [class.selected]="i == selected" (click)="onSelectCategory(cat)">
                     <span class="category-name"> {{ cat.catname }}</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<section class="app-grid">
+<section class="app-grid clearfix">
     <div class="container">
-        <div *ngFor="let cat of categoriesForApps">
-
-            <div>
-                <span><h3>{{ cat.catname }}</h3></span>
-            </div>
-            <div *ngFor="let app of apps">
-                <div *ngIf="app.CategoryName === cat.catname">
-
-                    <span> {{ app.AppName }}</span>
-
+        <div *ngFor="let cat of categoriesForApps; let i = index">
+            <div class="row clearfix">
+                <div *ngIf="i > 0" class="category-header">{{ cat.catname }}</div>
+                <div class="app" *ngFor="let app of apps | CategoryPipe: cat.catname">
+                    <div  class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="app-card">
+                            <div class="card-footer"> {{ app.AppName }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
