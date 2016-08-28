@@ -14,13 +14,18 @@
         <div *ngFor="let cat of categoriesForApps; let i = index">
             <div class="row clearfix">
                 <div *ngIf="i > 0" class="category-header">{{ cat.catname }}</div>
-                <div class="app" *ngFor="let app of apps | CategoryPipe: cat.catname">
-                    <div  class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="app-card">
-                            <div class="card-footer"> {{ app.AppName }}</div>
+                <carousel [noWrap]="noWrapSlides">
+                    <slide *ngFor = "let slide of cat.slides">
+                        <div class="app" *ngFor="let app of slide">
+                            <div  class="col-xs-12 col-sm-4 col-md-4">
+                                <div class="app-card">
+                                    <div class="card-footer"> {{ app.AppName }}</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </slide>
+
+                </carousel>
             </div>
         </div>
     </div>

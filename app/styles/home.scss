@@ -63,4 +63,19 @@
     }
 
   }
+  .carousel-indicators {
+    display: none;
+  }
+  .carousel-control {
+    &.left,&.right {
+      background: none;
+    }
+    &.right {
+      right: -100px;
+    }
+    &.left {
+      left: -100px;
+    }
+  }
+
 }
