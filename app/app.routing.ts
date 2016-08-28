@@ -1,3 +1,4 @@
+import { SearchComponent } from './components/search/search.component';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from '../app/components/home/home.component';
@@ -22,11 +23,11 @@ const appRoutes: Routes = [
         redirectTo: '/home',
         pathMatch: 'full'
     }
-    /*,
+    ,
     {
-        path: '/search', //TODO: add search parameters
-        component: DashboardComponent
-    }*/
+        path: 'search/:src', 
+        component: SearchComponent
+    }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

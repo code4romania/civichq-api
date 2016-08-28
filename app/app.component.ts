@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router }     from '@angular/router';
 
 @Component({
   selector: 'civiqhq-app',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 
 export class AppComponent { 
     title = 'Centrul civic';
+
+    constructor(private router: Router){
+
+    }
+
+  search(src: string){
+
+    this.router.navigate(['/search', src]);
+
+  }
+
 }

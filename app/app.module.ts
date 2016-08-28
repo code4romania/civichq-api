@@ -1,3 +1,4 @@
+import { SearchComponent } from './components/search/search.component';
 import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
@@ -18,7 +19,8 @@ import { AddAppComponent } from '../app/components/add-app/add-app.component';
     AppComponent,
     HomeComponent,
     AppProfileComponent,
-    AddAppComponent
+    AddAppComponent,
+    SearchComponent
   ],
   providers: [
     
