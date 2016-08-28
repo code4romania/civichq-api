@@ -15,7 +15,11 @@
     'app':                        { main: 'main.js',  defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
     'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+    'node_modules/ng2-bootstrap':              {  defaultExtension: 'js' },
   };
+  var paths = {
+    "ng2-bootstrap/ng2-bootstrap":   "node_modules/ng2-bootstrap"
+  }
   var ngPackageNames = [
     'common',
     'compiler',
@@ -42,7 +46,8 @@
   ngPackageNames.forEach(setPackageConfig);
   var config = {
     map: map,
-    packages: packages
+    packages: packages,
+    paths: paths
   };
   System.config(config);
 })(this);
