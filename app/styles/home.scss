@@ -71,11 +71,21 @@
       background: none;
     }
     &.right {
-      right: -100px;
+      right: -10%;
     }
     &.left {
-      left: -100px;
+      left: -10%;
     }
   }
 
+}
+@media screen and (max-width: 768px) {
+  .app-grid .carousel-control {
+    &.right {
+      right: 0;
+    }
+    &.left {
+      left: 0;
+    }
+  }
 }
