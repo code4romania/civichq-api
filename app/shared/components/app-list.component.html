@@ -11,7 +11,7 @@
         </div>
     </div>
 </div>
-<section class="app-grid clearfix">
+<section (window:resize)="onResize($event)" class="app-grid clearfix">
     <div class="container">
         <div *ngFor="let cat of categoriesForApps; let i = index">
             <div class="row clearfix">

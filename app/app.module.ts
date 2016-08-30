@@ -23,7 +23,7 @@ import { AddAppComponent } from '../app/components/add-app/add-app.component';
     SearchComponent
   ],
   providers: [
-    
+    { provide: 'Window',  useValue: window }
   ],
   bootstrap: [ AppComponent ]
 })
