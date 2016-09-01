@@ -1,0 +1,42 @@
+@import "variables";
+.app-profile {
+  padding: 60px 0;
+  .app-logo {
+    max-width: 300px;
+    height: auto;
+    margin: auto;
+    img {
+      width: 100%;
+    }
+  }
+  .social-share {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    .social-item {
+      &.facebook {
+        color: #3b5998;
+      }
+      &.twitter {
+        color: #1dcaff;
+      }
+      &.google {
+        color: #d34836;
+      }
+      &.linkedin {
+        color: #0077B5;
+      }
+      &.instagram {
+        color: #fb3958;
+      }
+      display: inline-block;
+      margin: 0 5px;
+    }
+  }
+  .app-info {
+    .app-name {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+}
