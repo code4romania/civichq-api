@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         this.homeService.getTopChildrenForCategories()
             .then(a => {this.apps = a; 
-                console.log('Got apps for categories')})
+                console.log('Got apps for categories: ' + a.length)})
             .catch(err => console.log(err));
     }
 

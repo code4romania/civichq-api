@@ -32,7 +32,7 @@ export class AppListComponent implements OnInit {
     ngOnInit() {
         this.catService.getCategories()
             .then(c => {
-                console.log('Got categories in AppListComponent');
+                console.log('Got categories in AppListComponent: ' + c.length);
                 this.categories = c;
                 this.categoriesForApps = c;
                 this.selected = 0;
@@ -41,8 +41,7 @@ export class AppListComponent implements OnInit {
                 this.ChunkSlides(size);
                 
             });
-            
-           
+
     }
 
     onSelectCategory(cat) {
