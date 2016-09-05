@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import { SearchComponent } from './components/search/search.component';
 import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
@@ -13,7 +14,8 @@ import { AddAppComponent } from '../app/components/add-app/add-app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    routing
+    routing,
+    HttpModule
   ],
   declarations: [
     AppComponent,

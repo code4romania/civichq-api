@@ -1,10 +1,14 @@
+import { Http } from '@angular/http';
+import { BaseService } from './../models/base.service';
 import { Injectable } from '@angular/core';
 import { ListAppModel } from './../models/list-app.model';
 
 @Injectable()
-export class SearchService {
+export class SearchService extends BaseService {
 
-    constructor() { }
+    constructor(private http: Http){
+        super(http);
+    }
 
         apps: ListAppModel[] = [
             { CategoryId: 1, CategoryName: 'Social', AppName: 'Social App 1', Tags: '#social tag 1', AppLogoName: 'sociallogo1.png' },
@@ -28,15 +32,27 @@ export class SearchService {
             { CategoryId: 4, CategoryName: 'Transparenta', AppName: 'Transparenta App 4', Tags: '#transp tag 3', AppLogoName: 'transplogo4.png' }
         ];
 
-    getAllApps() {
+    getAllApps(): Promise<ListAppModel[]> {
             
-        return Promise.resolve(this.apps);
+        let theApps: ListAppModel[] = [];
 
+        this.http.get(this.rootAddress + 'approvedapps')
+        .toPromise()
+        .then(res => theApps = res.json() as ListAppModel[])
+        .catch(this.handleError);
+
+        return Promise.resolve(theApps);
     }
 
-    searchBy(src: string) {
-
+    searchBy(src: string): Promise<ListAppModel[]> {
+        if(!src) {return;}
+        let theApps: ListAppModel[] = [];
         
+         this.http.get(this.rootAddress + 'search/' + src)
+        .toPromise()
+        .then(res => theApps = res.json() as ListAppModel[])
+        .catch(this.handleError);
+
         return Promise.resolve(this.apps.filter(a => a.AppName == src));
         
     }

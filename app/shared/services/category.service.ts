@@ -1,22 +1,40 @@
+import { Http, Response } from '@angular/http';
+import { BaseService } from './../models/base.service';
 import { Injectable } from '@angular/core';
 import { CategoryModel } from '../models/category.model';
+import 'rxjs/add/operator/toPromise';
+import { Observable }     from 'rxjs/Observable';
 
+class DbCategory{
+    Id: number;
+    CatName: string;
+    Ordinal: number;
+}
 
 @Injectable()
-export class CategoryService {
+export class CategoryService extends BaseService {
 
-    getCategories() {
+    constructor(private http: Http){
+        super(http);
+    }
 
-        let categories: CategoryModel[] = [
-            { id: 1, catname: 'Social',apps:[], ordinal: 10 },
-            { id: 2, catname: 'Educatie',apps:[], ordinal: 20 },
-            { id: 3, catname: 'Mediu',apps:[], ordinal: 30 },
-            { id: 4, catname: 'Transparenta',apps:[], ordinal: 40 },
-            { id: 5, catname: 'Politic',apps:[], ordinal: 50 },
-            { id: 6, catname: 'Servicii',apps:[], ordinal: 60 }
-        ];
+    getCategories(): Promise<CategoryModel[]> {
 
+        let categories: CategoryModel[] = [];
+
+        this.http.get(this.rootAddress + 'categories')
+        .toPromise()
+        .then(res => {
+            var dbCategories = res.json() as DbCategory[];
+            
+            dbCategories.forEach(c => categories.push(
+                {id: c.Id, catname: c.CatName, apps:[], ordinal: c.Ordinal }
+            ));
+        })
+        .catch(this.handleError);
+      
         return Promise.resolve(categories);
+
     }
 
 }

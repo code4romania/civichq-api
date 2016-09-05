@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit {
 
 
     ngOnInit() {
-        
+
         this.setSearchStringFromParams();
         this.search();
     }
@@ -42,9 +42,9 @@ export class SearchComponent implements OnInit {
     setSearchStringFromParams() {
 
         this.route.params.forEach((params: Params) => {
-            let src = params[0];
+            let src = params['src'];
             this.searchString = src;
-            alert('Src este ' + src);
+
         });
 
     }

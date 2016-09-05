@@ -38,9 +38,8 @@ export class AppListComponent implements OnInit {
                 let size = this.cSize.getChunkSize();
                 this.FilterAppsByCategory();
                 this.ChunkSlides(size);
-            })
-            .catch(err => console.log(err));
-
+            });
+            
            
     }
 
