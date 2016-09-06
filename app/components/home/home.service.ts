@@ -17,7 +17,7 @@ export class HomeService {
         return this.categoryService.getCategories();
     }
 
-    getTopChildrenForCategories() {
+    getTopChildrenForCategories(): Promise<ListAppModel[]> {
 
        return this.searchService.getAllApps();        
     }
