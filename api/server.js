@@ -24,6 +24,7 @@ router.use(function (req, res, next) {
     // do logging
     console.log('Something is happening.');
     console.log(req);
+    res.append('Access-Control-Allow-Origin','http://localhost:3000');
     next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -44,7 +45,7 @@ router.route('/categories')
 
         var catApi = new CategoriesApi();
         catApi.GetCategories(req, res, sequelize);
-        res.append('Access-Control-Allow-Origin','http://localhost:3000');
+        
     });
 
 router.route('/approvedapps')
@@ -52,7 +53,7 @@ router.route('/approvedapps')
 
         var api = new SearchApi();
         api.GetAllApprovedApps(req, res, sequelize);
-        res.append('Access-Control-Allow-Origin','http://localhost:3000');
+        
     });
 
 router.route('/search/:src_text')
@@ -62,7 +63,7 @@ router.route('/search/:src_text')
         console.log('Search param este ' + src);
         var api = new SearchApi();
         api.SearchBy(req, res, sequelize, src);
-        res.append('Access-Control-Allow-Origin','http://localhost:3000');
+        
     });
 
 router.route('/quit')

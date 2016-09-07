@@ -17,12 +17,12 @@ export class CategoryService extends BaseService {
     constructor(private http: Http){
         super(http);
     }
-
+    
     getCategories(): Promise<CategoryModel[]> {
 
         let categories: CategoryModel[] = [];
 
-        this.http.get(this.rootAddress + 'categories')
+        return this.http.get(this.rootAddress + 'categories')
         .toPromise()
         .then(res => {
             var dbCategories = res.json() as DbCategory[];
@@ -30,10 +30,10 @@ export class CategoryService extends BaseService {
             dbCategories.forEach(c => categories.push(
                 {id: c.Id, catname: c.CatName, apps:[], ordinal: c.Ordinal }
             ));
+            //console.log('Categories in category service: ' + dbCategories.length);
+            return categories;
         })
-        .catch(this.handleError);
-      
-        return Promise.resolve(categories);
+        .catch(this.handleError);       
 
     }
 
