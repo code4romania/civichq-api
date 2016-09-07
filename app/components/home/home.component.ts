@@ -9,6 +9,7 @@ import { HomeService  } from './home.service';
 import { CategoryPipe } from './../../shared/pipes/category-pipe';
 import { ListAppModel } from './../../shared/models/list-app.model';
 
+
 @Component({
     selector: 'home-component',
     templateUrl: 'app/components/home/home.component.html',
@@ -25,9 +26,10 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.homeService.getTopChildrenForCategories()
+        this.homeService.getAllApps()
             .then(a => {this.apps = a; 
-                console.log('Got apps for categories: ' + a.length)})
+                //console.log('HomeComponent apps for categories: ' + a.length)
+            })
             .catch(err => console.log(err));
     }
 
