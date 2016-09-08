@@ -3,7 +3,7 @@ import { CAROUSEL_DIRECTIVES } from 'ng2-bootstrap/components/carousel';
 import { CORE_DIRECTIVES } from '@angular/common';
 import { ListAppModel } from './../models/list-app.model';
 import { CategoryModel } from './../models/category.model';
-import { Component, OnInit, Input,Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { CategoryPipe } from './../../shared/pipes/category-pipe';
 import {ChunkSizeService} from './../../shared/services/windowSize.service';
 
@@ -11,7 +11,7 @@ import {ChunkSizeService} from './../../shared/services/windowSize.service';
     moduleId: module.id,
     selector: 'app-list',
     templateUrl: 'app-list.component.html',
-    providers: [CategoryService,ChunkSizeService],
+    providers: [CategoryService, ChunkSizeService],
     directives: [CORE_DIRECTIVES, CAROUSEL_DIRECTIVES],
     pipes: [CategoryPipe]
 })
@@ -19,8 +19,18 @@ export class AppListComponent implements OnInit {
 
     categories: CategoryModel[];
     categoriesForApps: CategoryModel[];
-    
-    @Input() apps:ListAppModel[];
+
+    _apps: ListAppModel[];
+
+    @Input() set apps(apps: ListAppModel[]) {
+        this._apps = apps;
+        if (apps) {
+            
+            let size = this.cSize.getChunkSize();
+            this.FilterAppsByCategory();
+            this.ChunkSlides(size);
+        }
+    }
 
 
     private selectedCategory: CategoryModel;
@@ -35,10 +45,7 @@ export class AppListComponent implements OnInit {
                 this.categories = c;
                 this.categoriesForApps = c;
                 this.selected = 0;
-                let size = this.cSize.getChunkSize();
-                this.FilterAppsByCategory();
-                this.ChunkSlides(size);
-                
+               
             });
 
     }
@@ -87,9 +94,9 @@ export class AppListComponent implements OnInit {
 
     private FilterAppsByCategory() {
         for (let i = 0; i < this.categoriesForApps.length; i++) {
-            for (let j = 0; j < this.apps.length; j++) {
-                if (this.apps[j].CategoryId == this.categoriesForApps[i].id) {
-                    this.categoriesForApps[i].apps.push(this.apps[j])
+            for (let j = 0; j < this._apps.length; j++) {
+                if (this._apps[j].CategoryId == this.categoriesForApps[i].id) {
+                    this.categoriesForApps[i].apps.push(this._apps[j])
                 }
             }
         }
@@ -102,7 +109,7 @@ export class AppListComponent implements OnInit {
             for (let j = 0; j < arrayLength; j += size) {
                 slidesArray.push(this.categoriesForApps[i].apps.slice(j, j + size))
             }
-            (<any>this.categoriesForApps[i]).slides  = slidesArray
+            (<any>this.categoriesForApps[i]).slides = slidesArray
         }
 
     }
