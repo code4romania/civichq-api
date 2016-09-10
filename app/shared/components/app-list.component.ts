@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CategoryService } from './../services/category.service';
 import { CAROUSEL_DIRECTIVES } from 'ng2-bootstrap/components/carousel';
 import { CORE_DIRECTIVES } from '@angular/common';
@@ -25,7 +26,7 @@ export class AppListComponent implements OnInit {
     @Input() set apps(apps: ListAppModel[]) {
         this._apps = apps;
         if (apps) {
-            
+
             let size = this.cSize.getChunkSize();
             this.FilterAppsByCategory();
             this.ChunkSlides(size);
@@ -36,7 +37,9 @@ export class AppListComponent implements OnInit {
     private selectedCategory: CategoryModel;
     selected: number;
 
-    constructor(private catService: CategoryService, private cSize: ChunkSizeService) {
+    constructor(private catService: CategoryService,
+        private cSize: ChunkSizeService,
+        private router: Router) {
     }
 
     ngOnInit() {
@@ -45,7 +48,7 @@ export class AppListComponent implements OnInit {
                 this.categories = c;
                 this.categoriesForApps = c;
                 this.selected = 0;
-               
+
             });
 
     }
@@ -112,5 +115,11 @@ export class AppListComponent implements OnInit {
             (<any>this.categoriesForApps[i]).slides = slidesArray
         }
 
+    }
+
+    onAppClick(id: number) {
+
+        let link = ['/app-profile', id];
+        this.router.navigate(link);
     }
 }

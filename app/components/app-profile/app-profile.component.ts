@@ -15,6 +15,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 export class AppProfileComponent implements OnInit {
 
     app: AppProfileModel;
+    displayAppId: string;
 
     constructor(private appProfileService: AppProfileService,
         private route: ActivatedRoute) {
@@ -22,17 +23,43 @@ export class AppProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        
-        this.route.params.forEach(
-            (params: Params) => {
-                let id = +params['id'];
 
-                this.appProfileService.getAppDetails(id)
-                    .then(a => {this.app = a; console.log('App este: ' + JSON.stringify(this.app));})
-                    .catch(err => console.log(err));
-            }
-        );
-        
+        this.getParam();
+        this.getAppProfileModel();
+
+    }
+
+    getParam() {
+
+        this.route.params.forEach((params: Params) => {
+            let src = params['id'];
+
+            this.displayAppId = src;
+        });
+    }
+
+    getAppProfileModel() {
+        if (this.displayAppId == "centrulcivic") {
+            this.getCentrulCivicProfile();
+        } else {
+            this.getGenericAppProfile();
+        }
+    }
+
+    getCentrulCivicProfile() {
+        this.appProfileService.getMasterDetails()
+            .then(a => { this.app = a; console.log('Master Profile este: ' + JSON.stringify(this.app)); })
+            .catch(err => console.log(err));
+    }
+
+    getGenericAppProfile() {
+        let id = +this.displayAppId;
+        if (id <= 0) { return; }
+
+        this.appProfileService.getAppDetails(+this.displayAppId)
+            .then(a => { this.app = a; console.log('Generic App este: ' + JSON.stringify(this.app)); })
+            .catch(err => console.log(err));
+
     }
 
 }

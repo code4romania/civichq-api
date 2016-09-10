@@ -21,7 +21,7 @@
                         <div class="app" *ngFor="let app of slide">
                             <div  class="col-xs-12 col-sm-4 col-md-4">
                                 <div class="app-card">
-                                    <div class="card-footer"> {{ app.AppName }}</div>
+                                    <div class="card-footer" (click) = "onAppClick(app.AppId)"> {{ app.AppName }}</div>
                                 </div>
                             </div>
                         </div>

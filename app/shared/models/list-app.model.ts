@@ -1,5 +1,6 @@
 export class ListAppModel
 {
+    AppId: number;
     CategoryId: number;
     CategoryName: string;
     AppName: string;
