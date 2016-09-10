@@ -8,7 +8,7 @@ SearchApi.prototype = {
 
     GetAllApprovedApps: function (req, res, seq) {
         var query = this.baseQuery + this.baseWhere + this.baseOrderBy + ';';
-        //"SELECT c.Id as CategoryId, c.CatName as CategoryName ,a.AppName, a.Tags, a.Logo as AppLogoName FROM Apps a INNER JOIN Categories c on a.CategoryId = c.Id WHERE a.IsApproved = 1 AND c.IsActive = 1 ORDER BY c.Ordinal, a.AppName;"
+        
         seq.query(query,
             { type: seq.QueryTypes.SELECT })
             .then(function (apps) {
@@ -20,7 +20,7 @@ SearchApi.prototype = {
         var src = searchString + '%';
         var newWhere = this.baseWhere + ' AND a.AppName LIKE :src ';
         var query = this.baseQuery + newWhere + this.baseOrderBy + ';';
-        //"SELECT c.Id as CategoryId, c.CatName as CategoryName ,a.AppName, a.Tags, a.Logo as AppLogoName FROM Apps a INNER JOIN Categories c on a.CategoryId = c.Id WHERE a.IsApproved = 1 AND c.IsActive = 1 AND a.AppName LIKE :src ORDER BY c.Ordinal, a.AppName;"
+        
         seq.query(query,
             {
                 replacements: { src: src },

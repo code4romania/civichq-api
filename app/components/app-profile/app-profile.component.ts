@@ -1,3 +1,5 @@
+import { NgoDetailModel } from './../../shared/models/ngo-detail.model';
+import { AppDetailModel } from './../../shared/models/app-detail.model';
 import { AppProfileModel } from './../../shared/models/app-profile.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { AppProfileService } from './app-profile.service';
@@ -20,12 +22,13 @@ export class AppProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        
         this.route.params.forEach(
             (params: Params) => {
                 let id = +params['id'];
 
                 this.appProfileService.getAppDetails(id)
-                    .then(a => this.app = a)
+                    .then(a => {this.app = a; console.log('App este: ' + JSON.stringify(this.app));})
                     .catch(err => console.log(err));
             }
         );
