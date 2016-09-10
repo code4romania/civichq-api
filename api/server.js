@@ -7,6 +7,7 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var CategoriesApi = require('./categories-api');
 var SearchApi = require('./search-api');
+var AppProfileApi = require('./app-profile-api');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -55,6 +56,15 @@ router.route('/approvedapps')
         api.GetAllApprovedApps(req, res, sequelize);
         
     });
+
+router.route('/appprofile/:id')
+    .get(function(req, res){
+
+        var api = new AppProfileApi();
+        var id = req.params.id;
+        api.GetAppProfile(res, sequelize, id);
+
+    })
 
 router.route('/search/:src_text')
     .get(function (req, res) {
