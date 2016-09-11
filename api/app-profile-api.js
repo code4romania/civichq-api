@@ -9,7 +9,8 @@ var AppProfileApi = function () {
             'a.description as \'appdetail.description\',' +
             'c.Id as \'appdetail.categoryid\',' +
             'c.CatName as \'appdetail.categoryname\',' +
-            'a.tags as \'appdetail.tags\',' +
+            'a.tags as \'appdetail.hashtags\',' +
+            'a.github as \'appdetail.github\',' +
             'n.NgoName as \'ngodetail.name\',' +
             'n.phone as \'ngodetail.phone\',' +
             'n.email as \'ngodetail.email\',' +
@@ -23,7 +24,7 @@ var AppProfileApi = function () {
             'FROM Apps a INNER JOIN Categories c on a.CategoryId = c.Id ' +
             'INNER JOIN Ngos n on a.NgoId = n.Id '; 
     
-    this.baseWhere = ' WHERE a.Id = :id';
+    this.baseWhere = ' WHERE a.IsApproved = 1 AND a.Id = :id';
 
 }
 

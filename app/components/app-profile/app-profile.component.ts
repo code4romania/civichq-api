@@ -23,7 +23,7 @@ export class AppProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
+        
         this.getParam();
         this.getAppProfileModel();
 
@@ -47,19 +47,28 @@ export class AppProfileComponent implements OnInit {
     }
 
     getCentrulCivicProfile() {
+        console.log('Getting centrul civic profile!!');
         this.appProfileService.getMasterDetails()
-            .then(a => { this.app = a; console.log('Master Profile este: ' + JSON.stringify(this.app)); })
+            .then(a => { this.app = a; this.describeApp(); })
             .catch(err => console.log(err));
     }
 
     getGenericAppProfile() {
         let id = +this.displayAppId;
         if (id <= 0) { return; }
-
+        console.log('Getting generic app profile!!!!');
         this.appProfileService.getAppDetails(+this.displayAppId)
-            .then(a => { this.app = a; console.log('Generic App este: ' + JSON.stringify(this.app)); })
+            .then(a => { this.app = a; this.describeApp(); })
             .catch(err => console.log(err));
 
+    }
+
+    private describeApp(){
+        var s = 'App este ';
+        if (this.displayAppId == 'centrulcivic') {
+            s = 'Master app este ';
+        }
+        console.log(s + this.app.appdetail.name + '; Ngo: ' + this.app.ngodetail.name);
     }
 
 }
