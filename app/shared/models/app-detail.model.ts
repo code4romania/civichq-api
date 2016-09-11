@@ -9,5 +9,5 @@ export class AppDetailModel{
     description: string;
     categoryid: number;
     categoryname: string;
-    hashtags: string[];
+    hashtags: string;
 }
