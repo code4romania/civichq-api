@@ -1,41 +1,50 @@
 import { NgoDetailModel } from './../../shared/models/ngo-detail.model';
 import { AppDetailModel } from './../../shared/models/app-detail.model';
 import { AppProfileModel } from './../../shared/models/app-profile.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { AppProfileService } from './app-profile.service';
 import { ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
+    
     selector: 'app-profile',
     templateUrl: 'app/components/app-profile/app-profile.component.html',
     providers: [AppProfileService]
 })
 
-export class AppProfileComponent implements OnInit {
+export class AppProfileComponent implements OnInit, OnDestroy {
 
-    app: AppProfileModel;
-    displayAppId: string;
+
 
     constructor(private appProfileService: AppProfileService,
         private route: ActivatedRoute) {
 
     }
 
-    ngOnInit(): void {
-        
-        this.getParam();
-        this.getAppProfileModel();
+    app: AppProfileModel;
+    displayAppId: string;
 
+    private sub;
+
+    ngOnInit() {
+
+        this.subscribeToParam();
     }
 
-    getParam() {
+    ngOnDestroy() {
+        this.sub.unsubscribe();
+    }
 
-        this.route.params.forEach((params: Params) => {
+    subscribeToParam() {
+
+        this.sub = this.route.params.subscribe(params => {
             let src = params['id'];
-
             this.displayAppId = src;
+            
+            this.getAppProfileModel();
         });
+
     }
 
     getAppProfileModel() {
@@ -57,13 +66,13 @@ export class AppProfileComponent implements OnInit {
         let id = +this.displayAppId;
         if (id <= 0) { return; }
         console.log('Getting generic app profile!!!!');
-        this.appProfileService.getAppDetails(+this.displayAppId)
+        this.appProfileService.getAppDetails(id)
             .then(a => { this.app = a; this.describeApp(); })
             .catch(err => console.log(err));
 
     }
 
-    private describeApp(){
+    private describeApp() {
         var s = 'App este ';
         if (this.displayAppId == 'centrulcivic') {
             s = 'Master app este ';
