@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var CategoriesApi = require('./categories-api');
 var SearchApi = require('./search-api');
 var AppProfileApi = require('./app-profile-api');
+var ApproveApi = require('./approve-api');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -25,7 +26,7 @@ router.use(function (req, res, next) {
     // do logging
     console.log('Something is happening.');
     console.log(req);
-    res.append('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.append('Access-Control-Allow-Origin', 'http://localhost:8381');
     next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -72,13 +73,28 @@ router.route('/masterprofile')
         var api = new AppProfileApi();
         api.GetMasterProfile(res, sequelize);
 
-    })
+    });
+
+router.route('/appstoapprove')
+    .get(function (req, res) {
+        var api = new ApproveApi();
+        api.GetAppList(res, sequelize);
+    });
+
+router.route('/updateapp/:appid')
+    .put(function (req, res) {
+
+        var api = new ApproveApi();
+        var appId = req.params.appid;
+        api.UpdateApp(res, sequelize, appId);
+
+    });
 
 router.route('/search/:src_text')
     .get(function (req, res) {
 
         var src = req.params.src_text;
-        console.log('Search param este ' + src);
+        
         var api = new SearchApi();
         api.SearchBy(req, res, sequelize, src);
 

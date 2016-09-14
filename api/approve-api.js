@@ -1,4 +1,4 @@
-require('./base-app-query');
+var BaseAppQuery = require('./base-app-query');
 
 var ApproveApi = function () {
 
@@ -28,7 +28,22 @@ ApproveApi.prototype = {
     },
 
     UpdateApp: function (res, seq, appId) {
+        var query = 'UPDATE Apps set IsApproved = !IsApproved WHERE Id = ' + appId + ';';
 
+        var p1 = seq.query(query,
+            {
+                type: seq.QueryTypes.UPDATE
+            }
+        )
+            .then(function (rez) {
+                res.json({ success: true });
+            },
+            function (err) {
+                res.send({
+                    success: false,
+                    error: err
+                });
+            });
 
     }
 
