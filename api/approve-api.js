@@ -28,10 +28,11 @@ ApproveApi.prototype = {
     },
 
     UpdateApp: function (res, seq, appId) {
-        var query = 'UPDATE Apps set IsApproved = !IsApproved WHERE Id = ' + appId + ';';
+        var query = 'UPDATE Apps set IsApproved = !IsApproved WHERE Id = :appId ;';
 
         var p1 = seq.query(query,
             {
+                replacements: {appId: appId },
                 type: seq.QueryTypes.UPDATE
             }
         )
