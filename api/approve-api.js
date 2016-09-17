@@ -1,12 +1,12 @@
 var BaseAppQuery = require('./base-app-query');
 
-var ApproveApi = function () {
+function ApproveApi() {
 
 }
 
 ApproveApi.prototype = {
 
-    GetAppList: function (res, seq) {
+    Apps: function (res, seq) {
 
         var bq = new BaseAppQuery();
         var selectquery = bq.GetBaseAppQuery();
