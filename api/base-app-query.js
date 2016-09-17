@@ -1,4 +1,4 @@
-var BaseAppQuery = function () {
+function BaseAppQuery() {
 
     this.baseAppQuery = 'SELECT a.id as \'appdetail.id\',' +
         'a.AppName as \'appdetail.name\',' +

@@ -1,4 +1,4 @@
-var CategoriesApi = function () { }
+function CategoriesApi() { }
 
 CategoriesApi.prototype =
     {

@@ -9,6 +9,7 @@ var CategoriesApi = require('./categories-api');
 var SearchApi = require('./search-api');
 var AppProfileApi = require('./app-profile-api');
 var ApproveApi = require('./approve-api');
+var AddAppApi = require('./add-app-api');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -26,7 +27,7 @@ router.use(function (req, res, next) {
     // do logging
     console.log('Something is happening.');
     console.log(req);
-    res.append('Access-Control-Allow-Origin', 'http://localhost:8381');
+    res.append('Access-Control-Allow-Origin', 'http://localhost:8381'); // 8381
     next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -39,7 +40,35 @@ var sequelize = new Sequelize('civichq', 'sa', 'code4ro123',
         dialect: 'mysql'
     });
 
+router.route('/addapp')
+    .post(
+    function (req, res) {
+        console.log(req.body);
+        var api = new AddAppApi(
+            req.body.appname,
+            req.body.appcategoryid,
+            req.body.appwebsite,
+            req.body.appfacebook,
+            req.body.appgithub,
+            req.body.appdescription,
+            req.body.appcreationdate,
+            req.body.applogoname,
+            req.body.apphashtags,
+            req.body.ngoname,
+            req.body.ngophone,
+            req.body.ngoemail,
+            req.body.ngofacebook,
+            req.body.ngogoogleplus,
+            req.body.ngolinkedin,
+            req.body.ngotwitter,
+            req.body.ngoinstagram,
+            req.body.ngodescription,
+            req.body.ngologoname
+        );
 
+        api.AddApp(res, sequelize);
+    }
+    );
 
 router.route('/categories')
     .get(
@@ -75,10 +104,10 @@ router.route('/masterprofile')
 
     });
 
-router.route('/appstoapprove')
+router.route('/apps')
     .get(function (req, res) {
         var api = new ApproveApi();
-        api.GetAppList(res, sequelize);
+        api.Apps(res, sequelize);
     });
 
 router.route('/updateapp/:appid')
@@ -94,7 +123,7 @@ router.route('/search/:src_text')
     .get(function (req, res) {
 
         var src = req.params.src_text;
-        
+
         var api = new SearchApi();
         api.SearchBy(req, res, sequelize, src);
 

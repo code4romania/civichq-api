@@ -1,4 +1,4 @@
-var AppProfileApi = function () {
+function AppProfileApi() {
 
     this.baseAppQuery = 'SELECT a.id as \'appdetail.id\',' +
             'a.AppName as \'appdetail.name\',' +
