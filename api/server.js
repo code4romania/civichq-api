@@ -10,6 +10,7 @@ var SearchApi = require('./search-api');
 var AppProfileApi = require('./app-profile-api');
 var ApproveApi = require('./approve-api');
 var AddAppApi = require('./add-app-api');
+var TagsApi = require('./tags-api');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -69,6 +70,16 @@ router.route('/addapp')
         api.AddApp(res, sequelize);
     }
     );
+
+router.route('/tags/:src')
+.get(
+    function(req, res){
+        var tagsApi = new TagsApi();
+        var src = req.params.src;
+
+        tagsApi.SearchTags(res, sequelize, src);
+    }
+);
 
 router.route('/categories')
     .get(
