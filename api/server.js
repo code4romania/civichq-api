@@ -29,6 +29,7 @@ router.use(function (req, res, next) {
     console.log('Something is happening.');
     console.log(req);
     res.append('Access-Control-Allow-Origin', 'http://localhost:8381'); // 8381
+    res.append('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS'); 
     next(); // make sure we go to the next routes and don't stop here
 });
 
