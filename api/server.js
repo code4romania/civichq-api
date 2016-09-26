@@ -11,28 +11,22 @@ var AppProfileApi = require('./app-profile-api');
 var ApproveApi = require('./approve-api');
 var AddAppApi = require('./add-app-api');
 var TagsApi = require('./tags-api');
+var jwt = require('jsonwebtoken');
+var expressJWT = require('express-jwt');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;        // set our port
 
+var port = process.env.PORT || 8080;        // set our port
+var routesToAuthorize = ['/api/updateapp'];
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
 
-// middleware to use for all requests
-router.use(function (req, res, next) {
-    // do logging
-    console.log('Something is happening.');
-    console.log(req);
-    res.append('Access-Control-Allow-Origin', 'http://localhost:8381'); // 8381
-    res.append('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS'); 
-    next(); // make sure we go to the next routes and don't stop here
-});
-
+app.set('thesecret', 'ilovesecurity');
 
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('civichq', 'sa', 'code4ro123',
@@ -40,6 +34,103 @@ var sequelize = new Sequelize('civichq', 'sa', 'code4ro123',
         host: 'code4ro.cwdsz3qqh57p.us-west-2.rds.amazonaws.com',
         port: 3306,
         dialect: 'mysql'
+    });
+
+// middleware to use for all requests
+router.use(function (req, res, next) {
+    // do logging
+    //console.log('Something is happening.');
+    //console.log('Original url: ' + req.originalUrl);
+
+
+    AppendHeaders(res);
+    if (req.method === "OPTIONS") {
+        //console.log('OPTIONS method called');
+        return res.status(200).end();
+    }
+
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+    //console.log(`IsAuthRequiredForUrl este ${IsAuthRequiredForUrl(req.originalUrl)}`)
+
+    if (IsAuthRequiredForUrl(req.originalUrl) == true) {
+        // decode token
+        //console.log('Required token for ' + req.originalUrl);
+        if (token) {
+
+            // verifies secret and checks exp
+            jwt.verify(token, app.get('thesecret'), function (err, decoded) {
+                if (err) {
+                    return res.json({ success: false, message: 'Failed to authenticate token.' });
+                } else {
+                    // if everything is good, save to request for use in other routes
+                    req.decoded = decoded;
+                    next();
+                }
+            });
+
+        } else {
+
+            // if there is no token
+            // return an error
+            return res.status(403).send({
+                success: false,
+                message: 'No token provided.'
+            });
+
+        }
+    }
+    else {
+        next();
+    }
+
+
+
+});
+
+function IsAuthRequiredForUrl(url) {
+    var isAuthReq = false;
+
+    var i = routesToAuthorize.length;
+    while (i--) {
+        if (url.indexOf(routesToAuthorize[i]) > -1) {
+            isAuthReq = true;
+        }
+    }
+
+    return isAuthReq;
+}
+
+function AppendHeaders(res) {
+    res.append('Access-Control-Allow-Origin', 'http://localhost:8381'); // 8381
+    res.append('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    res.append('Access-Control-Allow-Headers', 'Content-type,Authorization,x-access-token');
+}
+
+router.route('/auth')
+    .post(function (req, res) {
+
+        var user = req.body.username;
+        var pass = req.body.password;
+        //console.log(`In API auth; user: ${user} ; pass: ${pass}`);
+        //console.log(req.body);
+
+        if (user === "code4" && pass === "civitas123#") {
+            var token = jwt.sign({ payload: user }, app.get('thesecret'), {
+                expiresIn: '24h'
+            });
+            res.json({
+                success: true,
+                message: 'Enjoy your token!',
+                token: token
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'Incorrect credentials!'
+            });
+        }
+
     });
 
 router.route('/addapp')
@@ -73,14 +164,14 @@ router.route('/addapp')
     );
 
 router.route('/tags/:src')
-.get(
-    function(req, res){
+    .get(
+    function (req, res) {
         var tagsApi = new TagsApi();
         var src = req.params.src;
 
         tagsApi.SearchTags(res, sequelize, src);
     }
-);
+    );
 
 router.route('/categories')
     .get(
@@ -124,9 +215,12 @@ router.route('/apps')
 
 router.route('/updateapp/:appid')
     .put(function (req, res) {
-
-        var api = new ApproveApi();
+        
         var appId = req.params.appid;
+
+        console.log('updating app id ' + appId);
+        var api = new ApproveApi();
+        
         api.UpdateApp(res, sequelize, appId);
 
     });
@@ -149,12 +243,7 @@ router.route('/quit')
     }
     );
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function (req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
-});
 
-// more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
