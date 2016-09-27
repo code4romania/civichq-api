@@ -48,23 +48,23 @@ AddAppApi.prototype = {
         seq.query('CALL AddApp (:apname , :categoryid , :appwebsite , :appfacebook , :appgithub , :appdescription , :appcreationdate , :applogo , :apptags , :ngname , :ngophone , :ngoemail , :ngofacebook , :ngogoogleplus , :ngolinkedin , :ngotwitter , :ngoinstagram , :ngodescription , :ngologo );', {replacements: {
             apname: this.appname,
             categoryid: this.categoryid,
-            appwebsite: this.appwebsite,
-            appfacebook: this.appfacebook,
-            appgithub: this.appgithub,
-            appdescription: this.appdescription,
-            appcreationdate: this.appcreationdate,
-            applogo: this.applogo,
-            apptags: this.apptags,
+            appwebsite: this.appwebsite || null,
+            appfacebook: this.appfacebook || null,
+            appgithub: this.appgithub || null,
+            appdescription: this.appdescription || null,
+            appcreationdate: this.appcreationdate || null,
+            applogo: this.applogo || null,
+            apptags: this.apptags || null,
             ngname: this.ngoname,
             ngophone: this.ngophone,
             ngoemail: this.ngoemail,
-            ngofacebook: this.ngofacebook,
-            ngogoogleplus: this.ngogoogleplus,
-            ngolinkedin: this.ngolinkedin,
-            ngotwitter: this.ngotwitter,
-            ngoinstagram: this.ngoinstagram,
-            ngodescription: this.ngodescription,
-            ngologo: this.ngologo
+            ngofacebook: this.ngofacebook || null,
+            ngogoogleplus: this.ngogoogleplus || null,
+            ngolinkedin: this.ngolinkedin || null,
+            ngotwitter: this.ngotwitter || null,
+            ngoinstagram: this.ngoinstagram || null,
+            ngodescription: this.ngodescription || null,
+            ngologo: this.ngologo || null
         }}).then(function(r){
             res.send(r[0]);
         }).catch(function(err){

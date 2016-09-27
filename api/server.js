@@ -14,8 +14,9 @@ var TagsApi = require('./tags-api');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 var port = process.env.PORT || 8080;        // set our port
 
@@ -29,7 +30,8 @@ router.use(function (req, res, next) {
     console.log('Something is happening.');
     console.log(req);
     res.append('Access-Control-Allow-Origin', 'http://localhost:8381'); // 8381
-    res.append('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS'); 
+    res.append('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    res.append("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
     next(); // make sure we go to the next routes and don't stop here
 });
 
