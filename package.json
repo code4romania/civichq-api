@@ -2,7 +2,7 @@
   "name": "civiqhq",
   "version": "1.0.0",
   "scripts": {
-    "setup": "npm install -g browser-sync typescript@next typings node-sass && typings install",
+    "setup": "npm install -g pm2 browser-sync typescript@next typings node-sass && typings install",
     "clean": "rm -rf dist && mkdir dist",
     "build": "npm run clean && npm run build:ts && npm run build:sass",
     "build:ts": "tsc",
