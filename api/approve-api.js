@@ -10,8 +10,7 @@ ApproveApi.prototype = {
 
         var bq = new BaseAppQuery();
         var selectquery = bq.GetBaseAppQuery();
-        var queryend = ` WHERE a.IsMaster = 0
-                    ORDER BY COALESCE(a.IsApproved,0)`
+        var queryend = ' WHERE a.IsMaster = 0 ORDER BY COALESCE(a.IsApproved,0)';
         var query = selectquery + queryend;
 
         var p1 = seq.query(query,
