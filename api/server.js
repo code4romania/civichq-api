@@ -215,12 +215,12 @@ router.route('/apps')
 
 router.route('/updateapp/:appid')
     .put(function (req, res) {
-        
+
         var appId = req.params.appid;
 
         console.log('updating app id ' + appId);
         var api = new ApproveApi();
-        
+
         api.UpdateApp(res, sequelize, appId);
 
     });
