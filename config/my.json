@@ -1,0 +1,12 @@
+{
+    "sqlServer" : {
+        "host": "code4ro.cwdsz3qqh57p.us-west-2.rds.amazonaws.com",
+        "port": "3306",
+        "dialect": "mysql"
+    },
+    "sqlLogin" : {
+        "username": "sa",
+        "password" : "code4ro123",
+        "database" : "civichq"
+    }
+}

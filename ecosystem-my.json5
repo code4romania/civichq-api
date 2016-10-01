@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "civichq-api-production",
+      "script": "./api/server.js",
+      "env": {
+        "NODE_ENV":  "production"
+      },
+      "env_production": {
+      }
+    }
+  ]
+}
