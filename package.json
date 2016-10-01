@@ -38,6 +38,7 @@
     "express": "^4.14.0",
     "express-jwt": "^5.0.0",
     "jsonwebtoken": "^7.1.9",
+    "multer": "^1.2.0",
     "mysql": "^2.11.1",
     "ng2-bootstrap": "1.0.23",
     "reflect-metadata": "^0.1.3",
