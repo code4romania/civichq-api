@@ -13,6 +13,7 @@ var AddAppApi = require('./add-app-api');
 var TagsApi = require('./tags-api');
 var jwt = require('jsonwebtoken');
 var expressJWT = require('express-jwt');
+var UploadApi = require('./upload-api');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -133,6 +134,12 @@ router.route('/auth')
 
     });
 
+router.route('/uploadlogo')
+    .post(function (req, res) {
+        var uploadApi = new UploadApi();
+        uploadApi.UploadLogo(req, res);
+    });
+
 router.route('/addapp')
     .post(
     function (req, res) {
@@ -235,13 +242,13 @@ router.route('/search/:src_text')
 
     });
 
-router.route('/quit')
+/*router.route('/quit')
     .get(
     function (req, res) {
         res.send("closing...");
         process.exit(0);
     }
-    );
+    );*/
 
 
 
