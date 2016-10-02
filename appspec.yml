@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /www/centrucivic.ro
+    destination: /www/civichq-api
 hooks:
   AfterInstall:
     - location: scripts/install_and_build.sh
