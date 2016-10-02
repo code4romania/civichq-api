@@ -56,7 +56,7 @@ AddAppApi.prototype = {
             applogo: this.applogo || null,
             apptags: this.apptags || null,
             ngname: this.ngoname,
-            ngophone: this.ngophone,
+            ngophone: this.ngophone || null,
             ngoemail: this.ngoemail,
             ngofacebook: this.ngofacebook || null,
             ngogoogleplus: this.ngogoogleplus || null,
