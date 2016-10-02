@@ -1,4 +1,5 @@
 {
+    "clientLocation" : "http://localhost:8381",
     "sqlServer" : {
         "host": "code4ro.cwdsz3qqh57p.us-west-2.rds.amazonaws.com",
         "port": "3306",

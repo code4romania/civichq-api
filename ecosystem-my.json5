@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "civichq-api-production",
+      "name": "civichq-api-my",
       "script": "./api/server.js",
       "env": {
         "NODE_ENV":  "my"
