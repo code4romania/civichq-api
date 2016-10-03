@@ -12,6 +12,7 @@ var ApproveApi = require('./approve-api');
 var AddAppApi = require('./add-app-api');
 var TagsApi = require('./tags-api');
 var jwt = require('jsonwebtoken');
+var appConfig = require('config');
 var expressJWT = require('express-jwt');
 var UploadApi = require('./upload-api');
 
@@ -20,22 +21,14 @@ var UploadApi = require('./upload-api');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-var port = process.env.PORT || 8080;        // set our port
+var port = appConfig.get('port');        // set our port
 var routesToAuthorize = ['/api/updateapp'];
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
 
-app.set('thesecret', 'ilovesecurity');
-
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('civichq', 'sa', 'code4ro123',
-    {
-        host: 'code4ro.cwdsz3qqh57p.us-west-2.rds.amazonaws.com',
-        port: 3306,
-        dialect: 'mysql'
-    });
+var sequelize = new Sequelize(appConfig.get('sqlLogin.database'), appConfig.get('sqlLogin.username'), appConfig.get('sqlLogin.password'), appConfig.get('sqlServer') );
 
 // middleware to use for all requests
 router.use(function (req, res, next) {
@@ -60,7 +53,7 @@ router.use(function (req, res, next) {
         if (token) {
 
             // verifies secret and checks exp
-            jwt.verify(token, app.get('thesecret'), function (err, decoded) {
+            jwt.verify(token, app.get('jwtSecret'), function (err, decoded) {
                 if (err) {
                     return res.json({ success: false, message: 'Failed to authenticate token.' });
                 } else {
@@ -103,7 +96,7 @@ function IsAuthRequiredForUrl(url) {
 }
 
 function AppendHeaders(res) {
-    res.append('Access-Control-Allow-Origin', 'http://localhost:8381'); // 8381
+    res.append('Access-Control-Allow-Origin', appConfig.get('clientLocation')); // 8381
     res.append('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     res.append('Access-Control-Allow-Headers', 'Content-type,Authorization,x-access-token');
 }
@@ -117,7 +110,7 @@ router.route('/auth')
         //console.log(req.body);
 
         if (user === "code4" && pass === "civitas123#") {
-            var token = jwt.sign({ payload: user }, app.get('thesecret'), {
+            var token = jwt.sign({ payload: user }, appConfig.get('jwtSecret'), {
                 expiresIn: '24h'
             });
             res.json({
