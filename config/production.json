@@ -8,7 +8,7 @@
     },
     "sqlLogin" : {
         "username": "civichq",
-        "password" : "civichq",
-        "database" : "lGrl3dLfEHjcXsbJ"
+        "password" : "lGrl3dLfEHjcXsbJ",
+        "database" : "civichq"
     }
 }
