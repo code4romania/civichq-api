@@ -1,1 +1,0 @@
-Assets shared between app and api
