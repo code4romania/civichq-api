@@ -10,5 +10,6 @@
         "username": "civichq",
         "password" : "lGrl3dLfEHjcXsbJ",
         "database" : "civichq"
-    }
+    },
+    "IsDebug" : false
 }

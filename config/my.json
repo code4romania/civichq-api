@@ -10,5 +10,6 @@
         "username": "sa",
         "password" : "code4ro123",
         "database" : "civichq"
-    }
+    },
+    "IsDebug" : true
 }

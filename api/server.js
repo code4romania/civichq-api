@@ -15,6 +15,7 @@ var jwt = require('jsonwebtoken');
 var appConfig = require('config');
 var expressJWT = require('express-jwt');
 var UploadApi = require('./upload-api');
+var AuthApi = require('./auth-api');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -23,12 +24,13 @@ app.use(bodyParser.json());
 
 var port = appConfig.get('port');        // set our port
 var routesToAuthorize = ['/api/updateapp'];
+var isDebug = appConfig.get('IsDebug');
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
 
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize(appConfig.get('sqlLogin.database'), appConfig.get('sqlLogin.username'), appConfig.get('sqlLogin.password'), appConfig.get('sqlServer') );
+var sequelize = new Sequelize(appConfig.get('sqlLogin.database'), appConfig.get('sqlLogin.username'), appConfig.get('sqlLogin.password'), appConfig.get('sqlServer'));
 
 // middleware to use for all requests
 router.use(function (req, res, next) {
@@ -108,23 +110,38 @@ router.route('/auth')
         var pass = req.body.password;
         //console.log(`In API auth; user: ${user} ; pass: ${pass}`);
         //console.log(req.body);
+        var authapi = new AuthApi(appConfig.get('jwtSecret'), user, pass, sequelize);
+        authapi.Authenticate(isDebug, function (result) {
+            //console.log(result);
+            //user === "code4" && pass === "civitas123#"
+            if (result.success == true) {
+                var token = jwt.sign({ payload: user }, appConfig.get('jwtSecret'), {
+                    expiresIn: '24h'
+                });
+                res.json({
+                    success: true,
+                    message: 'Enjoy your token!',
+                    token: token,
+                    isadmin: result.data.IsAdmin
+                });
+            } else {
+                res.json({
+                    success: false,
+                    message: 'Incorrect credentials!'
+                });
+            }
+        });
 
-        if (user === "code4" && pass === "civitas123#") {
-            var token = jwt.sign({ payload: user }, appConfig.get('jwtSecret'), {
-                expiresIn: '24h'
-            });
-            res.json({
-                success: true,
-                message: 'Enjoy your token!',
-                token: token
-            });
-        } else {
-            res.json({
-                success: false,
-                message: 'Incorrect credentials!'
-            });
-        }
 
+    });
+
+router.route('/gethash')
+    .post(function (req, res) {
+
+        var pass = req.body.password;
+
+        var authapi = new AuthApi(appConfig.get('jwtSecret'), '', pass, sequelize);
+        authapi.GenerateHashForPass(res, true);
     });
 
 router.route('/uploadlogo')
