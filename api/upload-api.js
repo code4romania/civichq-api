@@ -1,7 +1,7 @@
 var multer = require('multer');
 
 function UploadApi() {
-    this.logoFolder = './../assets/images';
+    this.logoFolder = 'assets/images';
 }
 
 function UploadFiles(req, res, path, noOfFiles){
