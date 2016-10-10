@@ -110,8 +110,8 @@ router.route('/auth')
         var pass = req.body.password;
         //console.log(`In API auth; user: ${user} ; pass: ${pass}`);
         //console.log(req.body);
-        var authapi = new AuthApi(appConfig.get('jwtSecret'), user, pass, sequelize);
-        authapi.Authenticate(isDebug, function (result) {
+        var authapi = new AuthApi(appConfig.get('jwtSecret'), user, pass, sequelize, isDebug);
+        authapi.Authenticate(function (result) {
             //console.log(result);
             //user === "code4" && pass === "civitas123#"
             if (result.success == true) {
