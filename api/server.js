@@ -57,6 +57,7 @@ router.use(function (req, res, next) {
 
             // verifies secret and checks exp
             jwt.verify(token, theSecret, function (err, decoded) {
+
                 if (err) {
                    
                     return res.json({ success: false, message: 'Failed to authenticate token.' });
