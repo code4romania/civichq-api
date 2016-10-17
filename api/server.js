@@ -23,8 +23,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = appConfig.get('port');        // set our port
-var routesToAuthorize = ['/api/updateapp'];
+var routesToAuthorize = ['/api/updateapp', '/api/appprofile'];
 var isDebug = appConfig.get('IsDebug');
+var theSecret = appConfig.get('jwtSecret');
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
@@ -55,8 +56,9 @@ router.use(function (req, res, next) {
         if (token) {
 
             // verifies secret and checks exp
-            jwt.verify(token, app.get('jwtSecret'), function (err, decoded) {
+            jwt.verify(token, theSecret, function (err, decoded) {
                 if (err) {
+                   
                     return res.json({ success: false, message: 'Failed to authenticate token.' });
                 } else {
                     // if everything is good, save to request for use in other routes
@@ -108,15 +110,21 @@ router.route('/auth')
 
         var user = req.body.username;
         var pass = req.body.password;
+        var isSentinel = req.body.issentinel;
+
+        var expiresInStr = "24h";
+        if (isSentinel != undefined) {
+            expiresInStr = "15m";
+        }
         //console.log(`In API auth; user: ${user} ; pass: ${pass}`);
         //console.log(req.body);
-        var authapi = new AuthApi(appConfig.get('jwtSecret'), user, pass, sequelize, isDebug);
+        var authapi = new AuthApi(theSecret, user, pass, sequelize, isDebug);
         authapi.Authenticate(function (result) {
             //console.log(result);
             //user === "code4" && pass === "civitas123#"
             if (result.success == true) {
-                var token = jwt.sign({ payload: user }, appConfig.get('jwtSecret'), {
-                    expiresIn: '24h'
+                var token = jwt.sign({ payload: user }, theSecret, {
+                    expiresIn: expiresInStr
                 });
                 res.json({
                     success: true,
@@ -139,8 +147,8 @@ router.route('/gethash')
     .post(function (req, res) {
 
         var pass = req.body.password;
-
-        var authapi = new AuthApi(appConfig.get('jwtSecret'), '', pass, sequelize);
+        var sec = req.body.secret;
+        var authapi = new AuthApi(sec, '', pass, sequelize);
         authapi.GenerateHashForPass(res, true);
     });
 
