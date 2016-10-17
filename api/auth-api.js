@@ -39,8 +39,7 @@ function authAgainstDb(myself, encryptedPass, callback) {
         })
         .then(function (dbusr) {
             var formatter = new ResponseFormatter(myself.isDebug);
-            console.log('Printing usr ');
-            console.log(dbusr);
+           
 
             if (dbusr.length == 0) {
                 callback(formatter.FormatError('Credentiale invalide!'));
