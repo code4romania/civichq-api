@@ -4,7 +4,10 @@
     "sqlServer" : {
         "host": "code4ro.cwdsz3qqh57p.us-west-2.rds.amazonaws.com",
         "port": "3306",
-        "dialect": "mysql"
+        "dialect": "mysql",
+        "dialectOptions": {
+            "charset": "utf8"
+        }
     },
     "sqlLogin" : {
         "username": "sa",
