@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = appConfig.get('port');        // set our port
-var routesToAuthorize = ['/api/updateapp', '/api/appprofile'];
+var routesToAuthorize = ['/api/updateapp', '/api/appprofile', '/api/uploadlogo', '/api/addapp'];
 var isDebug = appConfig.get('IsDebug');
 var theSecret = appConfig.get('jwtSecret');
 // ROUTES FOR OUR API
