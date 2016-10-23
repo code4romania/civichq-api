@@ -26,7 +26,8 @@ var port = appConfig.get('port');        // set our port
 var routesToAuthorize = ['/api/updateapp', '/api/appprofile', 
                         '/api/uploadlogo', '/api/addapp', 
                         '/api/masterprofile', '/api/categories',
-                        '/api/approvedapps'];
+                        '/api/approvedapps', '/api/tags', '/api/search'];
+                        //'/api/categories',
 var isDebug = appConfig.get('IsDebug');
 var theSecret = appConfig.get('jwtSecret');
 // ROUTES FOR OUR API
@@ -247,7 +248,7 @@ router.route('/updateapp/:appid')
 
         var appId = req.params.appid;
 
-        console.log('updating app id ' + appId);
+        //console.log('updating app id ' + appId);
         var api = new ApproveApi();
 
         api.UpdateApp(res, sequelize, appId);
