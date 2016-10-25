@@ -2,7 +2,7 @@
 
 ```
 npm install
-npm start
+npm install -g pm2
 
 pm2 startOrRestart ecosystem-my.json5
 
