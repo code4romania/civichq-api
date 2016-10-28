@@ -1,4 +1,5 @@
 var multer = require('multer');
+var multerS3 = require('multer-s3');
 
 function UploadApi() {
     this.logoFolder = 'assets/images';
@@ -30,11 +31,11 @@ function UploadFiles(req, res, path, noOfFiles){
 
 UploadApi.prototype = {
 
-    
+
     UploadLogo: function (req, res) {
 
         return UploadFiles(req, res, this.logoFolder, 1);
-        
+
     }
 
 }
