@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk":"^2.6.15",
     "body-parser": "^1.15.2",
     "config": "^1.21.0",
     "core-js": "^2.4.0",
