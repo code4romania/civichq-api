@@ -12,8 +12,7 @@ nvm install node
 npm install
 npm install -g pm2
 
-pm2 startOrRestart ecosystem-my.json5
-pm2 start api/server.js
+pm2 startOrRestart ecosystem_my.json
 
 # view live logs
 pm2 logs
