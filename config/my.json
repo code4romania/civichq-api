@@ -1,8 +1,9 @@
 {
-    "jwtSecret" : "ilovesecurity",
+    "IsDebug" : true,
+    "jwtSecret" : "",
     "clientLocation" : "http://localhost:8381",
     "sqlServer" : {
-        "host": "code4ro.cwdsz3qqh57p.us-west-2.rds.amazonaws.com",
+        "host": "",
         "port": "3306",
         "dialect": "mysql",
         "dialectOptions": {
@@ -11,14 +12,13 @@
     },
     "sqlLogin" : {
         "username": "sa",
-        "password" : "code4ro123",
+        "password" : "",
         "database" : "civichq"
     },
     "S3" : {
-        "access-key" : "AKIAI2J6XDJLKZ3PAFKA",
-        "secret-key" : "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",
-        "bucket-url-root" : "http://civichq.s3.amazonaws.com/",
-        "bucket-app-folder" : "app-images/"
-    },
-    "IsDebug" : true
+        "access-key" : "",
+        "secret-key" : "",
+        "bucket-url-root" : "",
+        "bucket-app-folder" : ""
+    }
 }

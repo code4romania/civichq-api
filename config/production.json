@@ -1,8 +1,9 @@
 {
-    "jwtSecret" : "ireallyreallylovesecuritypleasebelieveme",
+    "IsDebug" : false,
+    "jwtSecret" : "",
     "clientLocation" : "http://www.centrucivic.ro",
     "sqlServer" : {
-        "host": "code4.cp3qriz8pbiv.eu-west-1.rds.amazonaws.com",
+        "host": "",
         "port": "3306",
         "dialect": "mysql",
         "dialectOptions": {
@@ -10,15 +11,14 @@
         }
     },
     "sqlLogin" : {
-        "username": "civichq",
-        "password" : "lGrl3dLfEHjcXsbJ",
-        "database" : "civichq"
+        "username": "",
+        "password" : "",
+        "database" : ""
     },
     "S3" : {
-        "access-key" : "AKIAI2J6XDJLKZ3PAFKA",
-        "secret-key" : "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",
-        "bucket-url-root" : "http://civichq.s3.amazonaws.com/",
-        "bucket-app-folder" : "app-images/"
-    },
-    "IsDebug" : false
+        "access-key" : "",
+        "secret-key" : "",
+        "bucket-url-root" : "",
+        "bucket-app-folder" : ""
+    }
 }
