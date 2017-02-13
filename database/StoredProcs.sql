@@ -57,7 +57,7 @@ IN appfacebook varchar(1000),
 IN appgithub varchar(1000),
 IN appdescription varchar(1000)  CHARSET utf8 ,
 IN appcreationdate date,
-IN applogo varchar(50),
+IN applogo varchar(150),
 IN apptags varchar(1000),
 IN ngname varchar(100) CHARSET utf8  ,
 IN ngophone varchar(500),
@@ -68,7 +68,7 @@ IN ngolinkedin varchar(1000),
 IN ngotwitter varchar(1000),
 IN ngoinstagram varchar(1000),
 IN ngodescription varchar(500)  CHARSET utf8 ,
-IN ngologo varchar(50))
+IN ngologo varchar(150))
 BEGIN
 DECLARE ngoId INT DEFAULT 0;
 DECLARE appId INT DEFAULT 0;

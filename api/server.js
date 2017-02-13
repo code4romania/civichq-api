@@ -175,7 +175,7 @@ router.route('/addapp')
             req.body.appgithub,
             req.body.appdescription,
             req.body.appcreationdate,
-            req.body.applogoname,
+            appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.applogoname,
             req.body.apphashtags,
             req.body.ngoname,
             req.body.ngophone,
@@ -186,7 +186,7 @@ router.route('/addapp')
             req.body.ngotwitter,
             req.body.ngoinstagram,
             req.body.ngodescription,
-            req.body.ngologoname
+            appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.ngologoname
         );
 
         api.AddApp(res, sequelize);

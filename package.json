@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk":"^2.6.15",
     "body-parser": "^1.15.2",
     "config": "^1.21.0",
     "core-js": "^2.4.0",
@@ -10,6 +11,7 @@
     "express-jwt": "^5.0.0",
     "jsonwebtoken": "^7.1.9",
     "multer": "^1.2.0",
+    "multer-s3": "^2.3.2",
     "mysql": "^2.11.1",
     "password-hash-and-salt": "^0.1.4",
     "pm2": "^2.0.15",
