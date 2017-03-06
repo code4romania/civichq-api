@@ -12,6 +12,7 @@ function BaseAppQuery() {
         'a.tags as \'appdetail.hashtags\',' +
         'a.github as \'appdetail.github\',' +
         'case when a.IsApproved = 1 then \'true\' else \'false\' end AS \'appdetail.isapproved\',' +
+        'n.Id as \'ngodetail.id\',' +
         'n.NgoName as \'ngodetail.name\',' +
         'n.phone as \'ngodetail.phone\',' +
         'n.email as \'ngodetail.email\',' +

@@ -18,6 +18,7 @@ ResponseFormatter.prototype = {
             data: data
         };
         if (this.isDebug) {
+            console.log('debug - writing response - success');
             console.log(response);
         }
 
@@ -30,6 +31,7 @@ ResponseFormatter.prototype = {
                 errormessage: err.toString(),
                 data: err
             };
+            console.log('debug - writing response - ERROR');
             console.log(response);
             return response;
         }
@@ -41,6 +43,23 @@ ResponseFormatter.prototype = {
         }
         }
 
+    },
+    FormatFromResult(res, result){
+            
+            result = result.toLowerCase()
+             if (this.isDebug) {
+                 console.log('debug - writing response - FormatFromResult');
+                console.log('printing result');
+                console.log(result);
+             }
+            
+
+            if (result.indexOf('error') > -1) {
+                res.send(this.FormatError(result));
+            }
+            else {
+                res.send(this.FormatSuccess(result));
+            }
     }
 
 }

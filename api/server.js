@@ -26,8 +26,8 @@ var port = appConfig.get('port');        // set our port
 var routesToAuthorize = ['/api/updateapp', '/api/appprofile', 
                         '/api/uploadlogo', '/api/addapp', 
                         '/api/masterprofile', '/api/categories',
-                        '/api/approvedapps', '/api/tags', '/api/search'];
-                        //'/api/categories',
+                        '/api/approvedapps', '/api/tags', '/api/search', '/api/editapp'];
+                        
 var isDebug = appConfig.get('IsDebug');
 var theSecret = appConfig.get('jwtSecret');
 // ROUTES FOR OUR API
@@ -254,6 +254,18 @@ router.route('/updateapp/:appid')
         api.UpdateApp(res, sequelize, appId);
 
     });
+
+
+router.route('/editapp')
+    .put(
+    function (req, res) {
+        //console.log(req.body);
+        var api = new ApproveApi();
+        var logoSavePath = appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder");
+        api.EditApp(res, sequelize, req.body, logoSavePath, isDebug);
+    }
+    );
+
 
 router.route('/search/:src_text')
     .get(function (req, res) {
