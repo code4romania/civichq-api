@@ -1,10 +1,10 @@
 {
     "IsDebug" : true,
     "port" : "8080",
-    "jwtSecret" : "security",
+    "jwtSecret" : "rity",
     "clientLocation" : "http://localhost:8381",
     "sqlServer" : {
-        "host": "code4ro.cwdsz3qq.us-west-2.rds.amazonaws.com",
+        "host": "code4ro..rds.amazonaws.com",
         "port": "3306",
         "dialect": "mysql",
         "dialectOptions": {
@@ -13,8 +13,8 @@
     },
     "sqlLogin" : {
         "username": "sa",
-        "password" : "2108",
-        "database" : "civichq"
+        "password" : "8",
+        "database" : "cq"
     },
     "S3" : {
         "access-key" : "",

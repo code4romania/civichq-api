@@ -10,7 +10,7 @@ function UploadApi() {
 }
 
 function UploadFiles(req, res, path, noOfFiles){
-        //Not used anymore by upload appLogo and ngoAppLogo. If not used anywhere else should be deleted.
+        
         var storage = multer.diskStorage({
             destination: function (req, file, cb) {
                 cb(null, path)
@@ -70,6 +70,7 @@ UploadApi.prototype = {
 
     UploadLogo: function (req, res) {
 
+        //return UploadFiles(req, res, './api', 1); //use this for test
         return UploadFilesToS3(req, res, 1);
 
     }
