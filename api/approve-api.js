@@ -62,7 +62,7 @@ ApproveApi.prototype = {
                 appdescription: reqBody.appdescription || null,
                 appcreationdate: reqBody.appcreationdate || null,
                 applogo: logoSavePath + reqBody.applogoname || null,
-                apptags: reqBody.apptags || null,
+                apptags: reqBody.apphashtags || null,
                 ngname: reqBody.ngoname,
                 ngophone: reqBody.ngophone || null,
                 ngoemail: reqBody.ngoemail,
