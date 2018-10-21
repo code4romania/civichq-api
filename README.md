@@ -31,10 +31,6 @@ javascript
 
 express js
 
-### Platforms
-
-### Package managers
-
 ### Database technology & provider
 
 mysql
