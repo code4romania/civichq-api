@@ -2,6 +2,12 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema civichq
+-- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema civichq
@@ -12,6 +18,8 @@ USE `civichq` ;
 -- -----------------------------------------------------
 -- Table `civichq`.`apps`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `civichq`.`apps` ;
+
 CREATE TABLE IF NOT EXISTS `civichq`.`apps` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `AppName` VARCHAR(100) NULL DEFAULT NULL,
@@ -28,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `civichq`.`apps` (
   `Tags` VARCHAR(150) NULL DEFAULT NULL,
   `IsMaster` TINYINT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id` (`id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
@@ -38,13 +46,15 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `civichq`.`categories`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `civichq`.`categories` ;
+
 CREATE TABLE IF NOT EXISTS `civichq`.`categories` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `CatName` VARCHAR(100) NULL DEFAULT NULL,
   `IsActive` INT(11) NULL DEFAULT NULL,
   `Ordinal` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id` (`id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4
@@ -54,6 +64,8 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `civichq`.`ngos`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `civichq`.`ngos` ;
+
 CREATE TABLE IF NOT EXISTS `civichq`.`ngos` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `NgoName` VARCHAR(200) NULL DEFAULT NULL,
@@ -67,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `civichq`.`ngos` (
   `Description` VARCHAR(200) NULL DEFAULT NULL,
   `Logo` VARCHAR(200) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id` (`id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
@@ -77,11 +89,13 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `civichq`.`tags`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `civichq`.`tags` ;
+
 CREATE TABLE IF NOT EXISTS `civichq`.`tags` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Tag` VARCHAR(200) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id` (`id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
@@ -91,6 +105,8 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `civichq`.`users`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `civichq`.`users` ;
+
 CREATE TABLE IF NOT EXISTS `civichq`.`users` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `UserName` VARCHAR(100) NULL DEFAULT NULL,
@@ -98,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `civichq`.`users` (
   `isActive` INT(11) NULL DEFAULT NULL,
   `isAdmin` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id` (`id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
@@ -110,9 +126,12 @@ USE `civichq` ;
 -- procedure AddApp
 -- -----------------------------------------------------
 
+USE `civichq`;
+DROP procedure IF EXISTS `civichq`.`AddApp`;
+
 DELIMITER $$
 USE `civichq`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AddApp`(
+CREATE PROCEDURE `AddApp`(
 IN apname varchar(100) CHARSET utf8 ,
 IN categoryid int,
 IN appwebsite varchar(1000),
@@ -140,21 +159,21 @@ DECLARE message VARCHAR(1999) DEFAULT '';
 DECLARE exit handler for sqlexception
 	BEGIN
     -- ERROR
-		
-		
-        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, 
+
+
+        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
 		@errno = MYSQL_ERRNO, @text = MESSAGE_TEXT;
 		SET message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
 		SELECT message as 'result';
-        
-        
+
+
         ROLLBACK;
-        
+
 	END;
 
 START TRANSACTION;
 
-	    
+
     SELECT Id into ngoId from Ngos where NgoName = ngname;
     SET message := CONCAT(message, ' Ngo id este ',  coalesce(ngoId, 'null'));
 	-- SELECT message AS msg;
@@ -165,26 +184,26 @@ START TRANSACTION;
 	-- SELECT message AS msg;
 
     IF ngoId = 0 THEN
-    
+
 		SET message := CONCAT(message, ' Insert Ngo ');
-		
+
         INSERT Ngos(NgoName, Phone, Email, Facebook, GooglePlus, LinkedIn, Twitter, Instagram, Description, Logo)
         values (ngname, ngophone, ngoemail, ngofacebook, ngogoogleplus, ngolinkedin, ngotwitter, ngoinstagram, ngodescription, ngologo);
-        
+
         SET ngoId := last_insert_id();
         SET message := CONCAT(message, ' Ngo id NOU este ',  coalesce(ngoId, 'null'));
 		-- SELECT message AS msg;
-    
+
     END IF;
-    
-   
+
+
     IF appId > 0 THEN
-		
+
 		SIGNAL SQLSTATE 'ERROR'
 		SET MESSAGE_TEXT = 'Aplicatia exista deja!';
-    
+
     END IF;
-    
+
        INSERT INTO `Apps`
 		(
 		`AppName`,
@@ -215,14 +234,14 @@ START TRANSACTION;
 		applogo,
 		apptags,
 		0);
-        
+
         CALL InsertTags(apptags);
 
 SET message = 'success';
 SELECT message as 'result';
 
 COMMIT;
-	
+
 END$$
 
 DELIMITER ;
@@ -231,54 +250,57 @@ DELIMITER ;
 -- procedure InsertTags
 -- -----------------------------------------------------
 
+USE `civichq`;
+DROP procedure IF EXISTS `civichq`.`InsertTags`;
+
 DELIMITER $$
 USE `civichq`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertTags`(
+CREATE  PROCEDURE `InsertTags`(
 IN theString varchar(1000) CHARSET utf8
 )
 BEGIN
 	DECLARE message VARCHAR(1999) DEFAULT '';
-    
-    
+
+
 	DECLARE exit handler for sqlexception
 	BEGIN
     -- ERROR
-        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, 
+        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
 		@errno = MYSQL_ERRNO, @text = MESSAGE_TEXT;
 		SET message = CONCAT(message, "ERROR ", @errno, " (", @sqlstate, "): ", @text);
 		SELECT message as 'result';
-        
+
 	END;
 
 		SET @delim = '#';
         SET theString := (SELECT SUBSTRING(theString, 2));
 		-- SET message := CONCAT(message, ' newString2: ', theString);
         -- SELECT message as 'result';
-        
+
         SET @Occurrences = LENGTH(theString) - LENGTH(REPLACE(theString, @delim, ''));
         -- SET message := CONCAT(message, ' Occurences: ', @Occurrences);
         -- SELECT message as 'result';
         myloop: WHILE (@Occurrences > 0)
-        DO 
+        DO
             SET @myValue = TRIM(SUBSTRING_INDEX(theString, @delim, 1));
             -- SET message := CONCAT(message, ' MyValue: ', @myValue);
             -- SELECT message as 'result';
-            
+
             IF (@myValue != '') THEN
-				
+
                 IF NOT exists (select 1 from Tags where Tag = CONCAT('#', @myValue)) THEN
 					INSERT Tags(Tag) VALUES (CONCAT('#', @myValue));
                 END IF;
-                
+
             ELSE
-                LEAVE myloop; 
+                LEAVE myloop;
             END IF;
             SET @Occurrences = LENGTH(theString) - LENGTH(REPLACE(theString, @delim, ''));
-            IF (@occurrences = 0) THEN 
-                LEAVE myloop; 
+            IF (@occurrences = 0) THEN
+                LEAVE myloop;
             END IF;
             SET theString = SUBSTRING(theString,LENGTH(SUBSTRING_INDEX(theString, @delim, 1))+2);
-        END WHILE;                  
+        END WHILE;
 
    END$$
 
@@ -287,7 +309,6 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 
 -- Initial Users --
 INSERT INTO `Users` VALUES ('3', 'code4', 'aa708ef36100823453c7d7d09f915e21281f7fe3af342d322874afd82b766a97d5dc671cbcc7368f22a21f3982f94251fc74eee92ded07a359ebe8b079448f6c', b'1', b'1'), ('4', 'sentinel', '546a7f97b8a81a1fcee3e47700393bc3972d1ef44bb8cfad9a9b18a880bbf3969327a410de2000aa92ed3a1a81984dfa92150a716f1a5ca3fdb3538da3bb3389', b'1', b'0');
