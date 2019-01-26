@@ -17,17 +17,22 @@ var expressJWT = require('express-jwt');
 var UploadApi = require('./upload-api');
 var AuthApi = require('./auth-api');
 
+const uiExpress = require('swagger-ui-express');
+const yamljs = require('yamljs');
+
+const { serve, setup } = uiExpress;
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = appConfig.get('port');        // set our port
-var routesToAuthorize = ['/api/updateapp', '/api/appprofile', 
-                        '/api/uploadlogo', '/api/addapp', 
-                        '/api/masterprofile', '/api/categories',
-                        '/api/approvedapps', '/api/tags', '/api/search'];
-                        //'/api/categories',
+var routesToAuthorize = ['/api/updateapp', '/api/appprofile',
+    '/api/uploadlogo', '/api/addapp',
+    '/api/masterprofile', '/api/categories',
+    '/api/approvedapps', '/api/tags', '/api/search'];
+//'/api/categories',
 var isDebug = appConfig.get('IsDebug');
 var theSecret = appConfig.get('jwtSecret');
 // ROUTES FOR OUR API
@@ -63,7 +68,7 @@ router.use(function (req, res, next) {
             jwt.verify(token, theSecret, function (err, decoded) {
 
                 if (err) {
-                   
+
                     return res.json({ success: false, message: 'Failed to authenticate token.' });
                 } else {
                     // if everything is good, save to request for use in other routes
@@ -165,52 +170,52 @@ router.route('/uploadlogo')
 
 router.route('/addapp')
     .post(
-    function (req, res) {
-        console.log(req.body);
-        var api = new AddAppApi(
-            req.body.appname,
-            req.body.appcategoryid,
-            req.body.appwebsite,
-            req.body.appfacebook,
-            req.body.appgithub,
-            req.body.appdescription,
-            req.body.appcreationdate,
-            appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.applogoname,
-            req.body.apphashtags,
-            req.body.ngoname,
-            req.body.ngophone,
-            req.body.ngoemail,
-            req.body.ngofacebook,
-            req.body.ngogoogleplus,
-            req.body.ngolinkedin,
-            req.body.ngotwitter,
-            req.body.ngoinstagram,
-            req.body.ngodescription,
-            appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.ngologoname
-        );
+        function (req, res) {
+            console.log(req.body);
+            var api = new AddAppApi(
+                req.body.appname,
+                req.body.appcategoryid,
+                req.body.appwebsite,
+                req.body.appfacebook,
+                req.body.appgithub,
+                req.body.appdescription,
+                req.body.appcreationdate,
+                appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.applogoname,
+                req.body.apphashtags,
+                req.body.ngoname,
+                req.body.ngophone,
+                req.body.ngoemail,
+                req.body.ngofacebook,
+                req.body.ngogoogleplus,
+                req.body.ngolinkedin,
+                req.body.ngotwitter,
+                req.body.ngoinstagram,
+                req.body.ngodescription,
+                appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.ngologoname
+            );
 
-        api.AddApp(res, sequelize);
-    }
+            api.AddApp(res, sequelize);
+        }
     );
 
 router.route('/tags/:src')
     .get(
-    function (req, res) {
-        var tagsApi = new TagsApi();
-        var src = req.params.src;
+        function (req, res) {
+            var tagsApi = new TagsApi();
+            var src = req.params.src;
 
-        tagsApi.SearchTags(res, sequelize, src);
-    }
+            tagsApi.SearchTags(res, sequelize, src);
+        }
     );
 
 router.route('/categories')
     .get(
-    function (req, res) {
+        function (req, res) {
 
-        var catApi = new CategoriesApi();
-        catApi.GetCategories(req, res, sequelize);
+            var catApi = new CategoriesApi();
+            catApi.GetCategories(req, res, sequelize);
 
-    });
+        });
 
 router.route('/approvedapps')
     .get(function (req, res) {
@@ -273,7 +278,8 @@ router.route('/search/:src_text')
     }
     );*/
 
-
+// setup the swagger documentation
+router.use('/explorer', serve, setup(yamljs.load('./swagger.yaml')));
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
