@@ -259,7 +259,6 @@ router.route('/updateapp/:appid')
 router.route('/editapp')
     .put(
     function (req, res) {
-        //console.log(req.body);
         var api = new ApproveApi();
         var logoSavePath = appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder");
         api.EditApp(res, sequelize, req.body, logoSavePath, isDebug);
