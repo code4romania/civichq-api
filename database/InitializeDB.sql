@@ -9,27 +9,27 @@ CREATE SCHEMA IF NOT EXISTS `civichq` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8
 USE `civichq` ;
 
 -- -----------------------------------------------------
--- Table `civichq`.`apps`
+-- Table `civichq`.`Apps`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `civichq`.`apps` ;
+DROP TABLE IF EXISTS `civichq`.`Apps` ;
 
-CREATE TABLE IF NOT EXISTS `civichq`.`apps` (
-  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `civichq`.`Apps` (
+  `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `AppName` VARCHAR(100) NULL DEFAULT NULL,
   `IsApproved` INT(11) NULL DEFAULT NULL,
   `AddedDate` DATE NULL DEFAULT NULL,
   `NgoId` INT(11) NULL DEFAULT NULL,
   `CategoryId` INT(11) NULL DEFAULT NULL,
-  `Website` VARCHAR(100) NULL DEFAULT NULL,
-  `Facebook` VARCHAR(100) NULL DEFAULT NULL,
-  `GitHub` VARCHAR(100) NULL DEFAULT NULL,
-  `Description` VARCHAR(100) NULL DEFAULT NULL,
+  `Website` VARCHAR(1000) NULL DEFAULT NULL,
+  `Facebook` VARCHAR(1000) NULL DEFAULT NULL,
+  `GitHub` VARCHAR(1000) NULL DEFAULT NULL,
+  `Description` VARCHAR(1000) NULL DEFAULT NULL,
   `CreationDate` DATE NULL DEFAULT NULL,
   `Logo` VARCHAR(150) NULL DEFAULT NULL,
   `Tags` VARCHAR(150) NULL DEFAULT NULL,
   `IsMaster` TINYINT(1) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id` (`id` ASC))
+  PRIMARY KEY (`Id`),
+  UNIQUE INDEX `Id` (`Id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
@@ -37,17 +37,17 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `civichq`.`categories`
+-- Table `civichq`.`Categories`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `civichq`.`categories` ;
+DROP TABLE IF EXISTS `civichq`.`Categories` ;
 
-CREATE TABLE IF NOT EXISTS `civichq`.`categories` (
-  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `civichq`.`Categories` (
+  `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `CatName` VARCHAR(100) NULL DEFAULT NULL,
   `IsActive` INT(11) NULL DEFAULT NULL,
   `Ordinal` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id` (`id` ASC))
+  PRIMARY KEY (`Id`),
+  UNIQUE INDEX `Id` (`Id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4
@@ -55,24 +55,24 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `civichq`.`ngos`
+-- Table `civichq`.`Ngos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `civichq`.`ngos` ;
+DROP TABLE IF EXISTS `civichq`.`Ngos` ;
 
-CREATE TABLE IF NOT EXISTS `civichq`.`ngos` (
-  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `NgoName` VARCHAR(200) NULL DEFAULT NULL,
-  `Phone` VARCHAR(200) NULL DEFAULT NULL,
-  `Email` VARCHAR(200) NULL DEFAULT NULL,
-  `Facebook` VARCHAR(200) NULL DEFAULT NULL,
-  `GooglePlus` VARCHAR(200) NULL DEFAULT NULL,
-  `LinkedIn` VARCHAR(200) NULL DEFAULT NULL,
-  `Twitter` VARCHAR(200) NULL DEFAULT NULL,
-  `Instagram` VARCHAR(200) NULL DEFAULT NULL,
-  `Description` VARCHAR(200) NULL DEFAULT NULL,
-  `Logo` VARCHAR(200) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id` (`id` ASC))
+CREATE TABLE IF NOT EXISTS `civichq`.`Ngos` (
+  `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `NgoName` VARCHAR(100) NULL DEFAULT NULL,
+  `Phone` VARCHAR(500) NULL DEFAULT NULL,
+  `Email` VARCHAR(500) NULL DEFAULT NULL,
+  `Facebook` VARCHAR(1000) NULL DEFAULT NULL,
+  `GooglePlus` VARCHAR(1000) NULL DEFAULT NULL,
+  `LinkedIn` VARCHAR(1000) NULL DEFAULT NULL,
+  `Twitter` VARCHAR(1000) NULL DEFAULT NULL,
+  `Instagram` VARCHAR(1000) NULL DEFAULT NULL,
+  `Description` VARCHAR(1000) NULL DEFAULT NULL,
+  `Logo` VARCHAR(150) NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE INDEX `Id` (`Id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
@@ -80,15 +80,15 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `civichq`.`tags`
+-- Table `civichq`.`Tags`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `civichq`.`tags` ;
+DROP TABLE IF EXISTS `civichq`.`Tags` ;
 
-CREATE TABLE IF NOT EXISTS `civichq`.`tags` (
-  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `civichq`.`Tags` (
+  `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Tag` VARCHAR(200) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id` (`id` ASC))
+  PRIMARY KEY (`Id`),
+  UNIQUE INDEX `Id` (`Id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
@@ -98,16 +98,16 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `civichq`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `civichq`.`users` ;
+DROP TABLE IF EXISTS `civichq`.`Users` ;
 
-CREATE TABLE IF NOT EXISTS `civichq`.`users` (
-  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `civichq`.`Users` (
+  `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `UserName` VARCHAR(100) NULL DEFAULT NULL,
   `Password` VARCHAR(200) NULL DEFAULT NULL,
   `isActive` INT(11) NULL DEFAULT NULL,
   `isAdmin` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id` (`id` ASC))
+  PRIMARY KEY (`Id`),
+  UNIQUE INDEX `Id` (`Id` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
