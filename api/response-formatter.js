@@ -46,7 +46,6 @@ ResponseFormatter.prototype = {
     },
     FormatFromResult(res, result){
             
-            result = result.toLowerCase()
              if (this.isDebug) {
                  console.log('debug - writing response - FormatFromResult');
                 console.log('printing result');
