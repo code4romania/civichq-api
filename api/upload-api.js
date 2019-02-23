@@ -56,7 +56,7 @@ function UploadFiles(req, res, path, noOfFiles){
             })
         }).array("uploads[]", 1)(req, res, function(err){
             if(err){
-                console.log(err);
+                console.error(err);
                 res.json(err);
                 return;
             }
