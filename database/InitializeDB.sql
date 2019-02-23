@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `civichq`.`Apps` (
   `CreationDate` DATE NULL DEFAULT NULL,
   `Logo` VARCHAR(150) NULL DEFAULT NULL,
   `Tags` VARCHAR(150) NULL DEFAULT NULL,
+  `Technologies` VARCHAR(150) NULL DEFAULT NULL,
   `IsMaster` TINYINT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE INDEX `Id` (`Id` ASC))
@@ -132,6 +133,7 @@ IN appfacebook varchar(1000),
 IN appgithub varchar(1000),
 IN appdescription varchar(1000)  CHARSET utf8 ,
 IN appcreationdate date,
+IN apptechnologies varchar(1000),
 IN applogo varchar(150),
 IN apptags varchar(1000),
 IN ngname varchar(100) CHARSET utf8  ,
@@ -209,6 +211,7 @@ START TRANSACTION;
 		`GitHub`,
 		`Description`,
 		`CreationDate`,
+		`Technologies`,
 		`Logo`,
 		`Tags`,
 		`IsMaster`)
@@ -224,6 +227,7 @@ START TRANSACTION;
 		appgithub,
 		appdescription,
 		appcreationdate,
+		apptechnologies,
 		applogo,
 		apptags,
 		0);

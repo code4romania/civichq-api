@@ -26,7 +26,8 @@ var port = appConfig.get('port');        // set our port
 var routesToAuthorize = ['/api/updateapp', '/api/appprofile', 
                         '/api/uploadlogo', '/api/addapp', 
                         '/api/masterprofile', '/api/categories',
-                        '/api/approvedapps', '/api/tags', '/api/search'];
+                        '/api/approvedapps', '/api/tags',
+                        '/api/search', '/api/technologies'];
                         //'/api/categories',
 var isDebug = appConfig.get('IsDebug');
 var theSecret = appConfig.get('jwtSecret');
@@ -175,6 +176,7 @@ router.route('/addapp')
             req.body.appgithub,
             req.body.appdescription,
             req.body.appcreationdate,
+            req.body.apptechnologies,
             appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.applogoname,
             req.body.apphashtags,
             req.body.ngoname,
