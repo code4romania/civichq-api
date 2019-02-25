@@ -25,8 +25,5 @@
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
     "node-sass": "^3.4.2"
-  },
-  "scripts": {
-    "start": "node ./api/server.js"
   }
 }
