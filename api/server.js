@@ -56,6 +56,12 @@ router.use(function (req, res, next) {
     }
 
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    if (!token) {
+        token = req.headers.authorization;
+        if (token) {
+            token = token.split(' ')[1];
+        }
+    }
 
     //console.log(`IsAuthRequiredForUrl este ${IsAuthRequiredForUrl(req.originalUrl)}`)
 
