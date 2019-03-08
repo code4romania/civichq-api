@@ -17,6 +17,11 @@ var expressJWT = require('express-jwt');
 var UploadApi = require('./upload-api');
 var AuthApi = require('./auth-api');
 
+const uiExpress = require('swagger-ui-express');
+const yamljs = require('yamljs');
+
+const { serve, setup } = uiExpress;
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,6 +56,12 @@ router.use(function (req, res, next) {
     }
 
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    if (!token) {
+        token = req.headers.authorization;
+        if (token) {
+            token = token.split(' ')[1];
+        }
+    }
 
     //console.log(`IsAuthRequiredForUrl este ${IsAuthRequiredForUrl(req.originalUrl)}`)
 
@@ -273,7 +284,8 @@ router.route('/search/:src_text')
     }
     );*/
 
-
+// setup the swagger documentation
+app.use('/explorer', serve, setup(yamljs.load('./swagger.yaml')));
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
