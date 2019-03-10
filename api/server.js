@@ -197,6 +197,7 @@ router.route('/addapp')
             req.body.ngotwitter,
             req.body.ngoinstagram,
             req.body.ngodescription,
+            req.body.active,
             appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.ngologoname
         );
 
