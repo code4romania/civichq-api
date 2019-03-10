@@ -28,8 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = appConfig.get('port');        // set our port
-var routesToAuthorize = ['/api/updateapp', '/api/appprofile', 
-                        '/api/uploadlogo', '/api/addapp', 
+var routesToAuthorize = ['/api/updateapp', '/api/appprofile',
+                        '/api/uploadlogo', '/api/addapp',
                         '/api/masterprofile', '/api/categories',
                         '/api/approvedapps', '/api/tags', '/api/search', '/api/editapp'];
                         
@@ -74,7 +74,7 @@ router.use(function (req, res, next) {
             jwt.verify(token, theSecret, function (err, decoded) {
 
                 if (err) {
-                   
+
                     return res.json({ success: false, message: 'Failed to authenticate token.' });
                 } else {
                     // if everything is good, save to request for use in other routes
@@ -197,8 +197,8 @@ router.route('/addapp')
             req.body.ngotwitter,
             req.body.ngoinstagram,
             req.body.ngodescription,
-            req.body.active,
-            appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.ngologoname
+            appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.ngologoname,
+            req.body.isActive
         );
 
         api.AddApp(res, sequelize);
