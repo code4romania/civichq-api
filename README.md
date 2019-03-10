@@ -63,6 +63,8 @@ pm2 logs
 pm2 list
 ```
 
+API docs with Swagger will be available at: http://localhost:8080/explorer
+
 ## Feedback
 
 * Request a new feature on GitHub.
