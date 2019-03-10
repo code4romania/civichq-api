@@ -16,6 +16,7 @@ var appConfig = require('config');
 var expressJWT = require('express-jwt');
 var UploadApi = require('./upload-api');
 var AuthApi = require('./auth-api');
+var TechnologiesApi = require("./technologies-api");
 
 const uiExpress = require('swagger-ui-express');
 const yamljs = require('yamljs');
@@ -275,6 +276,12 @@ router.route('/search/:src_text')
         var api = new SearchApi();
         api.SearchBy(req, res, sequelize, src);
 
+    });
+
+router.route('/technologies/')
+    .get(function (req, res) {
+        var api = new TechnologiesApi();
+        api.GetTechnologies(req, res, sequelize);
     });
 
 /*router.route('/quit')
