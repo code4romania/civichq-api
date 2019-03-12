@@ -16,6 +16,7 @@ var appConfig = require('config');
 var expressJWT = require('express-jwt');
 var UploadApi = require('./upload-api');
 var AuthApi = require('./auth-api');
+var TechnologiesApi = require("./technologies-api");
 
 const uiExpress = require('swagger-ui-express');
 const yamljs = require('yamljs');
@@ -28,11 +29,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = appConfig.get('port');        // set our port
-var routesToAuthorize = ['/api/updateapp', '/api/appprofile', 
-                        '/api/uploadlogo', '/api/addapp', 
+var routesToAuthorize = ['/api/updateapp', '/api/appprofile',
+                        '/api/uploadlogo', '/api/addapp',
                         '/api/masterprofile', '/api/categories',
-                        '/api/approvedapps', '/api/tags', '/api/search'];
-                        //'/api/categories',
+                        '/api/approvedapps', '/api/tags', '/api/search', '/api/editapp'];
+                        
 var isDebug = appConfig.get('IsDebug');
 var theSecret = appConfig.get('jwtSecret');
 // ROUTES FOR OUR API
@@ -74,7 +75,7 @@ router.use(function (req, res, next) {
             jwt.verify(token, theSecret, function (err, decoded) {
 
                 if (err) {
-                   
+
                     return res.json({ success: false, message: 'Failed to authenticate token.' });
                 } else {
                     // if everything is good, save to request for use in other routes
@@ -197,7 +198,8 @@ router.route('/addapp')
             req.body.ngotwitter,
             req.body.ngoinstagram,
             req.body.ngodescription,
-            appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.ngologoname
+            appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.ngologoname,
+            req.body.isActive
         );
 
         api.AddApp(res, sequelize);
@@ -266,6 +268,17 @@ router.route('/updateapp/:appid')
 
     });
 
+
+router.route('/editapp')
+    .put(
+    function (req, res) {
+        var api = new ApproveApi();
+        var logoSavePath = appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder");
+        api.EditApp(res, sequelize, req.body, logoSavePath, isDebug);
+    }
+    );
+
+
 router.route('/search/:src_text')
     .get(function (req, res) {
 
@@ -274,6 +287,12 @@ router.route('/search/:src_text')
         var api = new SearchApi();
         api.SearchBy(req, res, sequelize, src);
 
+    });
+
+router.route('/technologies/')
+    .get(function (req, res) {
+        var api = new TechnologiesApi();
+        api.GetTechnologies(req, res, sequelize);
     });
 
 /*router.route('/quit')
