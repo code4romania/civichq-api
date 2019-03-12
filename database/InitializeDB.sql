@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `civichq`.`Apps` (
   `Logo` VARCHAR(150) NULL DEFAULT NULL,
   `Tags` VARCHAR(150) NULL DEFAULT NULL,
   `IsMaster` TINYINT(1) NULL DEFAULT NULL,
+  `IsActive` TINYINT(1) NULL DEFAULT NULL
   PRIMARY KEY (`Id`),
   UNIQUE INDEX `Id` (`Id` ASC))
 ENGINE = InnoDB
@@ -210,7 +211,8 @@ IN ngolinkedin varchar(1000),
 IN ngotwitter varchar(1000),
 IN ngoinstagram varchar(1000),
 IN ngodescription varchar(500)  CHARSET utf8 ,
-IN ngologo varchar(150))
+IN ngologo varchar(150)),
+IN appisactive tinyint(1))
 BEGIN
 DECLARE ngoId INT DEFAULT 0;
 DECLARE appId INT DEFAULT 0;
@@ -278,7 +280,8 @@ START TRANSACTION;
 		`CreationDate`,
 		`Logo`,
 		`Tags`,
-		`IsMaster`)
+		`IsMaster`,
+    `IsActive`)
 		VALUES
 		(
 		apname,
@@ -293,7 +296,8 @@ START TRANSACTION;
 		appcreationdate,
 		applogo,
 		apptags,
-		0);
+		0,
+    appisactive);
 
         CALL InsertTags(apptags);
 
