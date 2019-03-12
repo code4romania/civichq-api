@@ -25,6 +25,8 @@ This repo holds the API of Centru Civic.
 
 This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.MD).
 
+If your changes involve updates in the DB please update the database/InitializeDB.sql scrips and also create a new incremental script in the database/incremental-scripts folder.
+
 ## Built With
 
 ### Programming languages
@@ -63,7 +65,13 @@ pm2 logs
 pm2 list
 ```
 
+### Docs
+
 API docs with Swagger will be available at: http://localhost:8080/explorer
+
+### Testing
+
+If you want to test your API calls with [Postman](https://www.getpostman.com/), we have included an export of the postman collection. You can find it here: /testing/Centru civic.postman_collection.json . Any updates to it and automated postman tests are highly appreciated.
 
 ## Feedback
 

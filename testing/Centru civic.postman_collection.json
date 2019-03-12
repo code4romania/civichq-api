@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "dd8db1cf-80ab-4f96-9c7a-5a717a259946",
+		"name": "Centru civic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET technologies",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/technologies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"technologies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET approved apps",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/approvedapps",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"approvedapps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET all apps",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/apps",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"apps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET search",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/search/ap",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"search",
+						"ap"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET tags",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/tags/a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tags",
+						"a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET app profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/appprofile/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"appprofile",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c3897fe8-e064-475f-946c-df6876c811d7",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"SOME_USER\",\r\n  \"password\": \"SOME_PASSWORD\",\r\n  \"issentinel\": \"string\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST edit app",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"appcategoryid\": 3,\n    \"appcreationdate\": \"1970-01-01\",\n    \"appdescription\": null,\n    \"appfacebook\": null,\n    \"appgithub\": null,\n    \"apphashtags\": \"tag\",\n    \"appid\": 9,\n    \"applogoname\": \"http://civichq-dev-sandbox.s3.amazonaws.com/app-images/Ihbfui4cjmZ9iotldefault.png\",\n    \"appname\": \"test irina irina 1 1\",\n    \"appwebsite\": \"test.com\",\n    \"ngodescription\": \"ceva despre tine\",\n    \"ngoemail\": \"test@unmail.com\",\n    \"ngofacebook\": null,\n    \"ngogoogleplus\": null,\n    \"ngoinstagram\": null,\n    \"ngolinkedin\": null,\n    \"ngologoname\": null,\n    \"ngoname\": \"test irina 1 1\",\n    \"ngophone\": \"\",\n    \"ngotwitter\": null,\n    \"ngoid\": 7\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/editapp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"editapp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST add app",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-access-token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"appcategoryid\":\"3\",\n\t\"appname\":\"test irina9\",\n\t\"ngoname\":\"test\",\n\t\"appwebsite\":\"test.com\",\n\t\"ngoemail\":\"test@mail.com\",\n\t\"applogoname\":\"Ihbfui4cjmZ9iotldefault.png\",\n\t\"isActive\": false\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addapp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addapp"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
