@@ -18,7 +18,8 @@ function AddAppApi(
     ngotwitter,
     ngoinstagram,
     ngodescription,
-    ngologo
+    ngologo,
+    isActive
 ){
     this.appname = appname;
     this.categoryid = categoryid;
@@ -40,6 +41,7 @@ function AddAppApi(
     this.ngoinstagram = ngoinstagram;
     this.ngodescription = ngodescription;
     this.ngologo = ngologo;
+    this.isActive = isActive;
     
 }
 
@@ -47,7 +49,7 @@ AddAppApi.prototype = {
 
     AddApp: function(res, seq){
 
-        seq.query('CALL AddApp (:apname , :categoryid , :appwebsite , :appfacebook , :appgithub , :appdescription , :appcreationdate , :applogo , :apptags , :apptechnologies , :ngname , :ngophone , :ngoemail , :ngofacebook , :ngogoogleplus , :ngolinkedin , :ngotwitter , :ngoinstagram , :ngodescription , :ngologo );', {replacements: {
+      seq.query('CALL AddApp (:apname , :categoryid , :appwebsite , :appfacebook , :appgithub , :appdescription , :appcreationdate , :applogo , :apptags , :apptechnologies , :ngname , :ngophone , :ngoemail , :ngofacebook , :ngogoogleplus , :ngolinkedin , :ngotwitter , :ngoinstagram , :ngodescription , :ngologo, :appisactive );', {replacements: {
             apname: this.appname,
             categoryid: this.categoryid,
             appwebsite: this.appwebsite || null,
@@ -67,7 +69,8 @@ AddAppApi.prototype = {
             ngotwitter: this.ngotwitter || null,
             ngoinstagram: this.ngoinstagram || null,
             ngodescription: this.ngodescription || null,
-            ngologo: this.ngologo || null
+            ngologo: this.ngologo || null,
+            appisactive: this.isActive === true ? 1 : 0
         }}).then(function(r){
             res.send(r[0]);
         }).catch(function(err){

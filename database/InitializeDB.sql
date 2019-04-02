@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `civichq`.`Apps` (
   `Tags` VARCHAR(150) NULL DEFAULT NULL,
   `Technologies` VARCHAR(150) NULL DEFAULT NULL,
   `IsMaster` TINYINT(1) NULL DEFAULT NULL,
+  `IsActive` TINYINT(1) NULL DEFAULT NULL
   PRIMARY KEY (`Id`),
   UNIQUE INDEX `Id` (`Id` ASC))
 ENGINE = InnoDB
@@ -114,6 +115,73 @@ AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+-- -----------------------------------------------------
+-- Table `civichq`.`Technologies`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `civichq`.`Technologies` ;
+
+CREATE TABLE IF NOT EXISTS `civichq`.`Technologies` (
+  `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `TechName` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE INDEX `Id` (`Id` ASC))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+INSERT INTO `Technologies` (`TechName`) VALUES ('Amazon Web Services');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Android');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Angular');
+INSERT INTO `Technologies` (`TechName`) VALUES ('AngularJS');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Asp.Net');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Azure');
+INSERT INTO `Technologies` (`TechName`) VALUES ('C');
+INSERT INTO `Technologies` (`TechName`) VALUES ('C#');
+INSERT INTO `Technologies` (`TechName`) VALUES ('C++');
+INSERT INTO `Technologies` (`TechName`) VALUES ('CodeIgniter');
+INSERT INTO `Technologies` (`TechName`) VALUES ('CSS');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Django');
+INSERT INTO `Technologies` (`TechName`) VALUES ('HTML');
+INSERT INTO `Technologies` (`TechName`) VALUES ('iOS');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Java');
+INSERT INTO `Technologies` (`TechName`) VALUES ('JavaScript');
+INSERT INTO `Technologies` (`TechName`) VALUES ('jQuery');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Laravel');
+INSERT INTO `Technologies` (`TechName`) VALUES ('LinQ');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Linux');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Maven');
+INSERT INTO `Technologies` (`TechName`) VALUES ('MongoDB');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Mysql');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Node.JS');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Objective-C');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Oracle');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Perl');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Php');
+INSERT INTO `Technologies` (`TechName`) VALUES ('PostgreSQL');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Python-2.7');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Python-3.x');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Qt');
+INSERT INTO `Technologies` (`TechName`) VALUES ('R');
+INSERT INTO `Technologies` (`TechName`) VALUES ('ReactJS');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Ruby');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Ruby-On-Rails');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Scala');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Selenium');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Spring');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Sql-Server');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Sqlite');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Swift');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Swing');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Symfony');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Twitter-Bootstrap');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Typescript');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Vb.Net');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Vba');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Wordpress');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Wpf');
+INSERT INTO `Technologies` (`TechName`) VALUES ('Xcode');
+
 USE `civichq` ;
 
 -- -----------------------------------------------------
@@ -145,7 +213,8 @@ IN ngolinkedin varchar(1000),
 IN ngotwitter varchar(1000),
 IN ngoinstagram varchar(1000),
 IN ngodescription varchar(500)  CHARSET utf8 ,
-IN ngologo varchar(150))
+IN ngologo varchar(150)),
+IN appisactive tinyint(1))
 BEGIN
 DECLARE ngoId INT DEFAULT 0;
 DECLARE appId INT DEFAULT 0;
@@ -214,7 +283,8 @@ START TRANSACTION;
 		`Technologies`,
 		`Logo`,
 		`Tags`,
-		`IsMaster`)
+		`IsMaster`,
+    `IsActive`)
 		VALUES
 		(
 		apname,
@@ -230,7 +300,8 @@ START TRANSACTION;
 		apptechnologies,
 		applogo,
 		apptags,
-		0);
+		0,
+    appisactive);
 
         CALL InsertTags(apptags);
 
@@ -242,6 +313,116 @@ COMMIT;
 END$$
 
 DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure EditApp
+-- ------------------------------------------------------
+DELIMITER //
+CREATE PROCEDURE EditApp
+(
+	IN `appid` int,
+    IN `apname` varchar(100) CHARSET utf8 ,
+	IN `categoryid` int,
+	IN `appwebsite` varchar(1000),
+	IN `appfacebook` varchar(1000),
+	IN `appgithub` varchar(1000),
+	IN `appdescription` varchar(1000)  CHARSET utf8 ,
+	IN `appcreationdate` date,
+	IN `applogo` VARCHAR(150),
+	IN `apptags` varchar(1000),
+	IN `ngname` varchar(100) CHARSET utf8  ,
+	IN `ngophone` varchar(500),
+	IN `ngoemail` varchar(500),
+	IN `ngofacebook` varchar(1000),
+	IN `ngogoogleplus` varchar(1000),
+	IN `ngolinkedin` varchar(1000),
+	IN `ngotwitter` varchar(1000),
+	IN `ngoinstagram` varchar(1000),
+	IN `ngodescription` varchar(500)  CHARSET utf8 ,
+	IN `ngologo` VARCHAR(150),
+    IN `ngoid` int
+)
+BEGIN
+DECLARE message VARCHAR(1999) DEFAULT '';
+DECLARE existingAppId int default 0;
+DECLARE existingNgoId int default 0;
+
+	DECLARE exit handler for sqlexception
+	BEGIN
+    -- ERROR
+
+
+        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
+		@errno = MYSQL_ERRNO, @text = MESSAGE_TEXT;
+		SET message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
+		SELECT message as 'result';
+
+
+        ROLLBACK;
+
+	END;
+
+START TRANSACTION;
+
+ -- first check if new name existis on an app with a different id
+ SELECT Id into existingAppId from Apps WHERE Id <> appid AND AppName = apname;
+
+ IF existingAppId > 0 then
+
+        SIGNAL SQLSTATE 'ERROR'
+		SET MESSAGE_TEXT = 'Exista deja o aplicatie cu acest nume!';
+
+ END IF;
+
+ -- check if new ngo name exists on an ngo with a different id
+SELECT n.Id into existingNgoId from Ngos n WHERE n.Id <> ngoid AND n.NgoName = ngname;
+IF existingNgoId > 0 THEN
+
+		SIGNAL SQLSTATE 'ERROR'
+		SET MESSAGE_TEXT = 'Exista deja un NGO cu acest nume!';
+
+END IF;
+
+
+ -- update app
+ Update Apps set
+			AppName = apname,
+            CategoryId = categoryid,
+            Website = appwebsite,
+            Facebook = appfacebook,
+            GitHub = appgithub,
+            Description = appdescription,
+            CreationDate = appcreationdate,
+            Logo = applogo,
+            Tags = apptags
+
+ where Id = appid;
+
+ CALL InsertTags(apptags);
+
+
+ -- update ngo
+ update Ngos set
+		NgoName = ngname,
+        Phone = ngophone,
+        Email = ngoemail,
+        Facebook = ngofacebook,
+        GooglePlus = ngogoogleplus,
+        LinkedIn = ngolinkedin,
+        Twitter = ngotwitter,
+        Instagram = ngoinstagram,
+        Description = ngodescription,
+        Logo = ngologo
+
+ where Id = ngoid;
+
+
+SET message = 'success';
+SELECT message as 'result';
+
+COMMIT;
+
+END; //
 
 -- -----------------------------------------------------
 -- procedure InsertTags

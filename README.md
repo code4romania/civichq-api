@@ -11,7 +11,7 @@
 
 It is sadly common for NGOs or individuals to be working on specific civic tech projects without being aware of similar or identical initiatives. This phenomena is conducive to resource wasting in an area already plagued by a dire lack of resources.
 
-Moreover, this lack of resources leads to projects and apps being rapidly abandoned, even when proving to be extremely useful. 
+Moreover, this lack of resources leads to projects and apps being rapidly abandoned, even when proving to be extremely useful.
 
 Centru Civic 1.0 is already online and has begun by listing over 30 civic apps developed in Romania. Currently, the apps suite is split in categories and each application has a dedicated presentation page, together with contact details and essential information. The platform allows NGOs to add their own apps as long as they fit simple criteria such as: opensource code, updated content and lack of any political affiliation.
 
@@ -24,6 +24,8 @@ This repo holds the API of Centru Civic.
 ## Contributing
 
 This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.MD).
+
+If your changes involve updates in the DB please update the database/InitializeDB.sql scrips and also create a new incremental script in the database/incremental-scripts folder.
 
 ## Built With
 
@@ -41,7 +43,7 @@ mysql
 
 ## Repos and projects
 
-Related to https://github.com/code4romania/civichq-client 
+Related to https://github.com/code4romania/civichq-client
 
 ## Deployment
 
@@ -62,6 +64,14 @@ pm2 logs
 # view running apps
 pm2 list
 ```
+
+### Docs
+
+API docs with Swagger will be available at: http://localhost:8080/explorer
+
+### Testing
+
+If you want to test your API calls with [Postman](https://www.getpostman.com/), we have included an export of the postman collection. You can find it here: /testing/Centru civic.postman_collection.json . Any updates to it and automated postman tests are highly appreciated.
 
 ## Feedback
 

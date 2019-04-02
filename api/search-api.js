@@ -1,5 +1,14 @@
 function SearchApi() {
-    this.baseQuery = 'SELECT a.Id as AppId, c.Id as CategoryId, c.CatName as CategoryName ,a.AppName, a.Tags, a.Logo as AppLogoName, n.Logo as NgoLogoName, a.Technologies FROM Apps a '
+    this.baseQuery = 'SELECT a.Id as AppId, ' +
+        'c.Id as CategoryId, ' +
+        'c.CatName as CategoryName, ' +
+        'a.AppName, ' +
+        'a.Tags, ' +
+        'a.Logo as AppLogoName, ' +
+        'n.Logo as NgoLogoName, ' +
+        'a.Technologies, ' +
+        'case when a.IsActive = 1 then \'true\' else \'false\' end as IsActive ' +
+        'FROM Apps a '
     + ' INNER JOIN Categories c on a.CategoryId = c.Id '
     + ' INNER JOIN Ngos n on a.NgoId = n.Id ';
     this.baseWhere = ' WHERE a.IsApproved = 1 AND c.IsActive = 1 ';
