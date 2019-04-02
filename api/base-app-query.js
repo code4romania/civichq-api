@@ -10,6 +10,7 @@ function BaseAppQuery() {
         'c.Id as \'appdetail.categoryid\',' +
         'c.CatName as \'appdetail.categoryname\',' +
         'a.tags as \'appdetail.hashtags\',' +
+        'a.technologies as \'appdetail.technologies\',' +
         'a.github as \'appdetail.github\',' +
         'case when a.IsApproved = 1 then \'true\' else \'false\' end AS \'appdetail.isapproved\',' +
         'case when a.IsActive = 1 then \'true\' else \'false\' end AS \'appdetail.isactive\',' +

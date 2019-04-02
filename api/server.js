@@ -33,7 +33,7 @@ var routesToAuthorize = ['/api/updateapp', '/api/appprofile',
                         '/api/uploadlogo', '/api/addapp',
                         '/api/masterprofile', '/api/categories',
                         '/api/approvedapps', '/api/tags', '/api/search', '/api/editapp'];
-                        
+
 var isDebug = appConfig.get('IsDebug');
 var theSecret = appConfig.get('jwtSecret');
 // ROUTES FOR OUR API
@@ -189,6 +189,7 @@ router.route('/addapp')
             req.body.appcreationdate,
             appConfig.get("S3.bucket-url-root") + appConfig.get("S3.bucket-app-folder") + req.body.applogoname,
             req.body.apphashtags,
+            req.body.apptechnologies,
             req.body.ngoname,
             req.body.ngophone,
             req.body.ngoemail,

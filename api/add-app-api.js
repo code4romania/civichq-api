@@ -8,6 +8,7 @@ function AddAppApi(
     appcreationdate,
     applogo,
     apptags,
+    apptechnologies,
     ngoname,
     ngophone,
     ngoemail,
@@ -29,6 +30,7 @@ function AddAppApi(
     this.appcreationdate = appcreationdate;
     this.applogo = applogo;
     this.apptags = apptags;
+    this.apptechnologies = apptechnologies;
     this.ngoname = ngoname;
     this.ngophone = ngophone;
     this.ngoemail = ngoemail;
@@ -47,7 +49,7 @@ AddAppApi.prototype = {
 
     AddApp: function(res, seq){
 
-        seq.query('CALL AddApp (:apname , :categoryid , :appwebsite , :appfacebook , :appgithub , :appdescription , :appcreationdate , :applogo , :apptags , :ngname , :ngophone , :ngoemail , :ngofacebook , :ngogoogleplus , :ngolinkedin , :ngotwitter , :ngoinstagram , :ngodescription , :ngologo, :appisactive );', {replacements: {
+      seq.query('CALL AddApp (:apname , :categoryid , :appwebsite , :appfacebook , :appgithub , :appdescription , :appcreationdate , :applogo , :apptags , :apptechnologies , :ngname , :ngophone , :ngoemail , :ngofacebook , :ngogoogleplus , :ngolinkedin , :ngotwitter , :ngoinstagram , :ngodescription , :ngologo, :appisactive );', {replacements: {
             apname: this.appname,
             categoryid: this.categoryid,
             appwebsite: this.appwebsite || null,
@@ -57,6 +59,7 @@ AddAppApi.prototype = {
             appcreationdate: this.appcreationdate || null,
             applogo: this.applogo || null,
             apptags: this.apptags || null,
+            apptechnologies: this.apptechnologies || null,
             ngname: this.ngoname,
             ngophone: this.ngophone || null,
             ngoemail: this.ngoemail,
