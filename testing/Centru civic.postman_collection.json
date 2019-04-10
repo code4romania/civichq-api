@@ -279,7 +279,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"appcategoryid\": 3,\n    \"appcreationdate\": \"1970-01-01\",\n    \"appdescription\": null,\n    \"appfacebook\": null,\n    \"appgithub\": null,\n    \"apphashtags\": \"tag\",\n    \"appid\": 9,\n    \"applogoname\": \"http://civichq-dev-sandbox.s3.amazonaws.com/app-images/Ihbfui4cjmZ9iotldefault.png\",\n    \"appname\": \"test irina irina 1 1\",\n    \"appwebsite\": \"test.com\",\n    \"ngodescription\": \"ceva despre tine\",\n    \"ngoemail\": \"test@unmail.com\",\n    \"ngofacebook\": null,\n    \"ngogoogleplus\": null,\n    \"ngoinstagram\": null,\n    \"ngolinkedin\": null,\n    \"ngologoname\": null,\n    \"ngoname\": \"test irina 1 1\",\n    \"ngophone\": \"\",\n    \"ngotwitter\": null,\n    \"ngoid\": 7\n}"
+					"raw": "{\n\t\"appid\":33,\n    \"appname\":\"test app name 2\",\n\t\"appcategoryid\":\"2\",\n\t\"appwebsite\":\"testappweb2.site\",\n\t\"appfacebook\":\"testapp2.facebook\",\n\t\"appgithub\":\"testapp2.github\",\n\t\"appdescription\":\"test app description 2\",\n\t\"applogoname\":\"Ihbfui4cjmZ9iotldefault.png\",\n\t\"apphashtags\":\"testtag2,testtag3\",\n\t\"apptechnologies\": \"java\",\n\t\"appcreationdate\":\"2019/04/12\",\n\t\"ngoname\":\"test ngo name 1\",\n\t\"ngophone\":\"testngoweb2.site\",\n\t\"ngoemail\":\"testngo2@mail.com\",\n\t\"ngofacebook\":\"ngo2.facebook\",\n\t\"ngogoogleplus\":\"ngo2.ngogoogleplus\",\n\t\"ngolinkedin\":\"ngo2.ngolinkedin\",\n\t\"ngotwitter\":\"ngo2.ngotwitter\",\n\t\"ngoinstagram\":\"ngo2.ngoinstagram\",\n\t\"ngodescription\":\"test ngo description 2\",\n\t\"ngologo\":\"Ihbfui4cjmZ9iotldefault.png\",\n\t\"isActive\": false,\n    \"ngoid\": 11\n}\n\t"
 				},
 				"url": {
 					"raw": "http://localhost:8080/api/editapp",
@@ -314,7 +314,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"appcategoryid\":\"3\",\n\t\"appname\":\"test irina9\",\n\t\"ngoname\":\"test\",\n\t\"appwebsite\":\"test.com\",\n\t\"ngoemail\":\"test@mail.com\",\n\t\"applogoname\":\"Ihbfui4cjmZ9iotldefault.png\",\n\t\"isActive\": false\n}"
+					"raw": "{\n\t\"appname\":\"test app name 14\",\n\t\"appcategoryid\":\"3\",\n\t\"appwebsite\":\"testappweb1.site\",\n\t\"appfacebook\":\"testapp1.facebook\",\n\t\"appgithub\":\"testapp1.github\",\n\t\"appdescription\":\"test app description 1\",\n\t\"applogoname\":\"Ihbfui4cjmZ9iotldefault.png\",\n\t\"apphashtags\":\"testtag1,testtag2\",\n\t\"apptechnologies\": \"Android, kotlin\",\n\t\"appcreationdate\":\"2019/04/10\",\n\t\"ngoname\":\"test ngo name 14\",\n\t\"ngophone\":\"testngoweb1.site\",\n\t\"ngoemail\":\"testngo1@mail.com\",\n\t\"ngofacebook\":\"ngo1.facebook\",\n\t\"ngogoogleplus\":\"ngo1.ngogoogleplus\",\n\t\"ngolinkedin\":\"ngo1.ngolinkedin\",\n\t\"ngotwitter\":\"ngo1.ngotwitter\",\n\t\"ngoinstagram\":\"ngo1.ngoinstagram\",\n\t\"ngodescription\":\"test ngo description 1\",\n\t\"ngologoname\":\"Ihbfui4cjmZ9iotldefault.png\",\n\t\"isActive\": true\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/api/addapp",
