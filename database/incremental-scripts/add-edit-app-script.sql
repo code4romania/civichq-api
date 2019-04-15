@@ -24,7 +24,8 @@ CREATE PROCEDURE EditApp
 	IN `ngoinstagram` varchar(1000),
 	IN `ngodescription` varchar(500)  CHARSET utf8 ,
 	IN `ngologo` VARCHAR(150),
-    IN `ngoid` int
+    IN `ngoid` int,
+	IN `appisactive` TINYINT(1)
 )
 BEGIN
 DECLARE message VARCHAR(1999) DEFAULT '';
@@ -78,7 +79,8 @@ END IF;
             Description = appdescription,
             CreationDate = appcreationdate,
             Logo = applogo,
-            Tags = apptags
+            Tags = apptags,
+			IsActive = appisactive
 
  where Id = appid;
 
