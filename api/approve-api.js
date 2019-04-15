@@ -51,7 +51,7 @@ ApproveApi.prototype = {
     EditApp: function (res, seq, reqBody, logoSavePath, isDebug) {
         var resp = new ResponseFormatter(isDebug);
         console.log(JSON.stringify(reqBody, null, 4));
-        seq.query('CALL EditApp (:appid,  :apname , :categoryid , :appwebsite , :appfacebook , :appgithub , :appdescription , :appcreationdate , :applogo , :apptags , :ngname , :ngophone , :ngoemail , :ngofacebook , :ngogoogleplus , :ngolinkedin , :ngotwitter , :ngoinstagram , :ngodescription , :ngologo, :ngoid, :appisactive );', {
+        seq.query('CALL EditApp (:appid,  :apname , :categoryid , :appwebsite , :appfacebook , :appgithub , :appdescription , :apptechnologies , :appcreationdate , :applogo , :apptags , :ngname , :ngophone , :ngoemail , :ngofacebook , :ngogoogleplus , :ngolinkedin , :ngotwitter , :ngoinstagram , :ngodescription , :ngologo, :ngoid, :appisactive );', {
             replacements: {
                 appid: reqBody.appid,
                 apname: reqBody.appname,
@@ -60,6 +60,7 @@ ApproveApi.prototype = {
                 appfacebook: reqBody.appfacebook || null,
                 appgithub: reqBody.appgithub || null,
                 appdescription: reqBody.appdescription || null,
+                apptechnologies: reqBody.apptechnologies || null,
                 appcreationdate: reqBody.appcreationdate || null,
                 applogo: logoSavePath + reqBody.applogoname || null,
                 apptags: reqBody.apphashtags || null,
@@ -81,9 +82,9 @@ ApproveApi.prototype = {
             
         })
             .catch(
-            function (err) {
-                res.send(resp.FormatError(err));
-            }
+                function (err) {
+                    res.send(resp.FormatError(err));
+                }
             );
     }
 
