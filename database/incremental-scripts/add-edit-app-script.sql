@@ -11,6 +11,7 @@ CREATE PROCEDURE EditApp
 	IN `appfacebook` varchar(1000),
 	IN `appgithub` varchar(1000),
 	IN `appdescription` varchar(1000)  CHARSET utf8 ,
+	IN `apptechnologies` varchar(1000)  CHARSET utf8 ,
 	IN `appcreationdate` date,
 	IN `applogo` VARCHAR(150),
 	IN `apptags` varchar(1000),
@@ -24,7 +25,8 @@ CREATE PROCEDURE EditApp
 	IN `ngoinstagram` varchar(1000),
 	IN `ngodescription` varchar(500)  CHARSET utf8 ,
 	IN `ngologo` VARCHAR(150),
-    IN `ngoid` int
+    IN `ngoid` int,
+	IN `appisactive` TINYINT(1)
 )
 BEGIN
 DECLARE message VARCHAR(1999) DEFAULT '';
@@ -76,9 +78,11 @@ END IF;
             Facebook = appfacebook,
             GitHub = appgithub,
             Description = appdescription,
+            Technologies = apptechnologies,
             CreationDate = appcreationdate,
             Logo = applogo,
-            Tags = apptags
+            Tags = apptags,
+			IsActive = appisactive
 
  where Id = appid;
 

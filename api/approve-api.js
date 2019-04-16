@@ -51,7 +51,7 @@ ApproveApi.prototype = {
     EditApp: function (res, seq, reqBody, logoSavePath, isDebug) {
         var resp = new ResponseFormatter(isDebug);
         console.log(JSON.stringify(reqBody, null, 4));
-        seq.query('CALL EditApp (:appid,  :apname , :categoryid , :appwebsite , :appfacebook , :appgithub , :appdescription , :appcreationdate , :applogo , :apptags , :ngname , :ngophone , :ngoemail , :ngofacebook , :ngogoogleplus , :ngolinkedin , :ngotwitter , :ngoinstagram , :ngodescription , :ngologo, :ngoid );', {
+        seq.query('CALL EditApp (:appid,  :apname , :categoryid , :appwebsite , :appfacebook , :appgithub , :appdescription , :apptechnologies , :appcreationdate , :applogo , :apptags , :ngname , :ngophone , :ngoemail , :ngofacebook , :ngogoogleplus , :ngolinkedin , :ngotwitter , :ngoinstagram , :ngodescription , :ngologo, :ngoid, :appisactive );', {
             replacements: {
                 appid: reqBody.appid,
                 apname: reqBody.appname,
@@ -60,6 +60,7 @@ ApproveApi.prototype = {
                 appfacebook: reqBody.appfacebook || null,
                 appgithub: reqBody.appgithub || null,
                 appdescription: reqBody.appdescription || null,
+                apptechnologies: reqBody.apptechnologies || null,
                 appcreationdate: reqBody.appcreationdate || null,
                 applogo: logoSavePath + reqBody.applogoname || null,
                 apptags: reqBody.apphashtags || null,
@@ -73,16 +74,17 @@ ApproveApi.prototype = {
                 ngoinstagram: reqBody.ngoinstagram || null,
                 ngodescription: reqBody.ngodescription || null,
                 ngologo: logoSavePath + reqBody.ngologoname || null,
-                ngoid: reqBody.ngoid
+                ngoid: reqBody.ngoid,
+                appisactive: reqBody.isActive === true ? 1 : 0
             }
         }).then(function (rez) {
             resp.FormatFromResult(res, rez[0].result);
             
         })
             .catch(
-            function (err) {
-                res.send(resp.FormatError(err));
-            }
+                function (err) {
+                    res.send(resp.FormatError(err));
+                }
             );
     }
 
