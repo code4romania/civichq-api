@@ -1,6 +1,8 @@
 -- -----------------------------------------------------
 -- procedure EditApp
 -- ------------------------------------------------------
+DROP procedure IF EXISTS `civichq`.`EditApp`;
+
 DELIMITER //
 CREATE PROCEDURE EditApp
 (
