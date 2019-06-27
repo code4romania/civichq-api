@@ -1,55 +1,15 @@
-DELIMITER //
-CREATE PROCEDURE `InsertTags`(
-IN theString varchar(1000) CHARSET utf8
-)
-BEGIN
-	DECLARE message VARCHAR(1999) DEFAULT '';
-    
-    
-	DECLARE exit handler for sqlexception
-	BEGIN
-    -- ERROR
-        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, 
-		@errno = MYSQL_ERRNO, @text = MESSAGE_TEXT;
-		SET message = CONCAT(message, "ERROR ", @errno, " (", @sqlstate, "): ", @text);
-		SELECT message as 'result';
-        
-	END;
+ALTER TABLE `civichq`.`Apps` ADD COLUMN `Technologies` VARCHAR(150) NULL DEFAULT NULL AFTER `Tags`;
 
-		SET @delim = '#';
-        SET theString := (SELECT SUBSTRING(theString, 2));
-		-- SET message := CONCAT(message, ' newString2: ', theString);
-        -- SELECT message as 'result';
-        
-        SET @Occurrences = LENGTH(theString) - LENGTH(REPLACE(theString, @delim, ''));
-        -- SET message := CONCAT(message, ' Occurences: ', @Occurrences);
-        -- SELECT message as 'result';
-        myloop: WHILE (@Occurrences > 0)
-        DO 
-            SET @myValue = TRIM(SUBSTRING_INDEX(theString, @delim, 1));
-            -- SET message := CONCAT(message, ' MyValue: ', @myValue);
-            -- SELECT message as 'result';
-            
-            IF (@myValue != '') THEN
-				
-                IF NOT exists (select 1 from Tags where Tag = CONCAT('#', @myValue)) THEN
-					INSERT Tags(Tag) VALUES (CONCAT('#', @myValue));
-                END IF;
-                
-            ELSE
-                LEAVE myloop; 
-            END IF;
-            SET @Occurrences = LENGTH(theString) - LENGTH(REPLACE(theString, @delim, ''));
-            IF (@occurrences = 0) THEN 
-                LEAVE myloop; 
-            END IF;
-            SET theString = SUBSTRING(theString,LENGTH(SUBSTRING_INDEX(theString, @delim, 1))+2);
-        END WHILE;                  
+-- -----------------------------------------------------
+-- procedure AddApp
+-- -----------------------------------------------------
 
-   END;//
+USE `civichq`;
+DROP procedure IF EXISTS `civichq`.`AddApp`;
 
-   DELIMITER //
-   CREATE PROCEDURE `AddApp`(
+DELIMITER $$
+USE `civichq`$$
+CREATE PROCEDURE `AddApp`(
 IN apname varchar(100) CHARSET utf8 ,
 IN categoryid int,
 IN appwebsite varchar(1000),
@@ -59,6 +19,7 @@ IN appdescription varchar(1000)  CHARSET utf8 ,
 IN appcreationdate date,
 IN applogo varchar(150),
 IN apptags varchar(1000),
+IN apptechnologies varchar(1000),
 IN ngname varchar(100) CHARSET utf8  ,
 IN ngophone varchar(500),
 IN ngoemail varchar(500),
@@ -68,7 +29,8 @@ IN ngolinkedin varchar(1000),
 IN ngotwitter varchar(1000),
 IN ngoinstagram varchar(1000),
 IN ngodescription varchar(500)  CHARSET utf8 ,
-IN ngologo varchar(150))
+IN ngologo varchar(150),
+IN appisactive tinyint(1))
 BEGIN
 DECLARE ngoId INT DEFAULT 0;
 DECLARE appId INT DEFAULT 0;
@@ -77,21 +39,21 @@ DECLARE message VARCHAR(1999) DEFAULT '';
 DECLARE exit handler for sqlexception
 	BEGIN
     -- ERROR
-		
-		
-        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, 
+
+
+        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
 		@errno = MYSQL_ERRNO, @text = MESSAGE_TEXT;
 		SET message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
 		SELECT message as 'result';
-        
-        
+
+
         ROLLBACK;
-        
+
 	END;
 
 START TRANSACTION;
 
-	    
+
     SELECT Id into ngoId from Ngos where NgoName = ngname;
     SET message := CONCAT(message, ' Ngo id este ',  coalesce(ngoId, 'null'));
 	-- SELECT message AS msg;
@@ -102,26 +64,26 @@ START TRANSACTION;
 	-- SELECT message AS msg;
 
     IF ngoId = 0 THEN
-    
+
 		SET message := CONCAT(message, ' Insert Ngo ');
-		
+
         INSERT Ngos(NgoName, Phone, Email, Facebook, GooglePlus, LinkedIn, Twitter, Instagram, Description, Logo)
         values (ngname, ngophone, ngoemail, ngofacebook, ngogoogleplus, ngolinkedin, ngotwitter, ngoinstagram, ngodescription, ngologo);
-        
+
         SET ngoId := last_insert_id();
         SET message := CONCAT(message, ' Ngo id NOU este ',  coalesce(ngoId, 'null'));
 		-- SELECT message AS msg;
-    
+
     END IF;
-    
-   
+
+
     IF appId > 0 THEN
-		
+
 		SIGNAL SQLSTATE 'ERROR'
 		SET MESSAGE_TEXT = 'Aplicatia exista deja!';
-    
+
     END IF;
-    
+
        INSERT INTO `Apps`
 		(
 		`AppName`,
@@ -136,7 +98,9 @@ START TRANSACTION;
 		`CreationDate`,
 		`Logo`,
 		`Tags`,
-		`IsMaster`)
+    `Technologies`,
+		`IsMaster`,
+		`IsActive`)
 		VALUES
 		(
 		apname,
@@ -151,14 +115,17 @@ START TRANSACTION;
 		appcreationdate,
 		applogo,
 		apptags,
-		0);
-        
+    apptechnologies,
+		0,
+		appisactive);
+
         CALL InsertTags(apptags);
 
 SET message = 'success';
 SELECT message as 'result';
 
 COMMIT;
-	
-END;//
- 
+
+END$$
+
+DELIMITER ;

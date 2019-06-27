@@ -10,7 +10,7 @@ function UploadApi() {
 }
 
 function UploadFiles(req, res, path, noOfFiles){
-        //Not used anymore by upload appLogo and ngoAppLogo. If not used anywhere else should be deleted.
+        
         var storage = multer.diskStorage({
             destination: function (req, file, cb) {
                 cb(null, path)
@@ -37,7 +37,7 @@ function UploadFiles(req, res, path, noOfFiles){
         aws.config.update({
             accessKeyId : appConfig.get("S3.access-key"),
             secretAccessKey: appConfig.get("S3.secret-key"),
-            "region" : "eu-central-1"
+            "region" : appConfig.get("S3.region")
         });
         var s3 = new aws.S3({
             signatureVersion: 'v4'}); 
@@ -45,7 +45,7 @@ function UploadFiles(req, res, path, noOfFiles){
         var upload = multer({
             storage: multerS3({
                 s3:s3,
-                bucket : 'civichq',
+                bucket : appConfig.get("S3.bucket"),
                 metadata: function (req, file, cb) {
                     cb(null, {fieldName: file.fieldname});
                 },
@@ -56,6 +56,7 @@ function UploadFiles(req, res, path, noOfFiles){
             })
         }).array("uploads[]", 1)(req, res, function(err){
             if(err){
+                console.error(err);
                 res.json(err);
                 return;
             }
@@ -70,6 +71,7 @@ UploadApi.prototype = {
 
     UploadLogo: function (req, res) {
 
+        //return UploadFiles(req, res, './api', 1); //use this for test
         return UploadFilesToS3(req, res, 1);
 
     }

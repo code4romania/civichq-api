@@ -1,0 +1,488 @@
+openapi: 3.0.0
+info:
+  description: >-
+    This is a sample CentruCivic server. You can find out more about Swagger at
+    [http://swagger.io](http://swagger.io) or on [irc.freenode.net,
+    #swagger](http://swagger.io/irc/).
+  version: 1.0.0
+  title: Swagger Centru civic
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: apps
+    description: Operations about apps.
+  - name: actions
+    description: Other operations.
+paths:
+  /categories:
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+        - actions
+      summary: Find all categories
+      description: Find all categories
+      operationId: getCategories
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /approvedapps:
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+        - apps
+      summary: Find all approved apps
+      description: Find all approved apps
+      operationId: getAllApprovedApps
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApprovedAppData'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApprovedAppData'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /masterprofile:
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+        - actions
+      summary: Get the master profile
+      description: ''
+      operationId: getMasterProfile
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProfileData'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProfileData'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /auth:
+    post:
+      tags:
+        - actions
+      summary: Get the token that will be used by the user to log in into the system
+      description: ''
+      operationId: auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginData'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/LoginData'
+        description: Login data
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied
+  /gethash:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - actions
+      summary: Get the hash
+      description: ''
+      operationId: gethash
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HashData'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/HashData'
+        description: Hash data
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /uploadlogo:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - actions
+      summary: Uploads the photo.
+      description: ''
+      operationId: uploadphoto
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhotoData'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PhotoData'
+        description: Photo data
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /addapp:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - apps
+      summary: Adds a new app.
+      description: ''
+      operationId: addapp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppData'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/AppData'
+        description: App data
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  '/updateapp/{appid}':
+    put:
+      security:
+      - bearerAuth: []
+      tags:
+        - apps
+      summary: Update an existing app
+      description: ''
+      operationId: updateApp
+      parameters:
+        - name: appid
+          in: path
+          description: ID of post to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: App not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppData'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/AppData'
+        description: App object that needs to be updated
+        required: true
+  '/tags/{src}':
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+        - actions
+      summary: Find tags by src
+      description: ''
+      operationId: searchTags
+      parameters:
+        - name: src
+          in: path
+          description: src to find by
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TagData'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TagData'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  '/appprofile/{id}':
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+        - apps
+      summary: Find profile by id
+      description: ''
+      operationId: getAppProfile
+      parameters:
+        - name: id
+          in: path
+          description: id to find by
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ProfileData'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileData'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  '/search/{src_text}':
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+        - apps
+      summary: Find app by name
+      description: ''
+      operationId: searchBy
+      parameters:
+        - name: src_text
+          in: path
+          description: name to find by
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/AppData'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppData'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: 'http://localhost:8080/api'
+  - url: 'https://localhost:8080/api'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+  schemas:
+    Category:
+      type: object
+      properties:
+        Id:
+          type: string
+          example: my post
+        CatName:
+          type: string
+          example: description
+        Ordinal:
+          type: string
+          example: location
+      xml:
+        name: Category
+    LoginData:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        issentinel:
+          type: string
+      xml:
+        name: LoginData
+    HashData:
+      type: object
+      required:
+        - password
+        - secret
+      properties:
+        password:
+          type: string
+        secret:
+          type: string
+      xml:
+        name: HashData
+    PhotoData:
+      type: object
+      xml:
+        name: HashData
+    AppData:
+      type: object
+      required:
+        - appname
+        - appcategoryid
+        - ngoname
+        - ngoemail
+      properties:
+        appname:
+          type: string
+        appcategoryid:
+          type: string
+        appwebsite:
+          type: string
+        appfacebook:
+          type: string
+        appgithub:
+          type: string
+        appdescription:
+          type: string
+        appcreationdate:
+          type: string
+        apphashtags:
+          type: string
+        ngoname:
+          type: string
+        ngophone:
+          type: string
+        ngoemail:
+          type: string
+        ngofacebook:
+          type: string
+        ngogoogleplus:
+          type: string
+        ngolinkedin:
+          type: string
+        ngoinstagram:
+          type: string
+        ngodescription:
+          type: string
+      xml:
+        name: HashData
+    ApprovedAppData:
+      type: object
+      properties:
+        AppId:
+          type: string
+        CategoryId:
+          type: string
+        CategoryName:
+          type: string
+        Tags:
+          type: array
+          xml:
+            name: "tag"
+            wrapped: true
+          items:
+            type: "string"
+        AppLogoName:
+          type: string
+        NgoLogoName:
+          type: string
+      xml:
+        name: ApprovedAppData
+    ProfileData:
+      type: object
+      properties:
+        AppId:
+          type: string
+        CategoryId:
+          type: string
+        CategoryName:
+          type: string
+        Tags:
+          type: array
+          xml:
+            name: "tag"
+            wrapped: true
+          items:
+            type: "string"
+        AppLogoName:
+          type: string
+        NgoLogoName:
+          type: string
+      xml:
+        name: ProfileData
+    TagData:
+      type: object
+      xml:
+        name: TagData
