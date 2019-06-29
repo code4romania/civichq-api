@@ -51,6 +51,17 @@ ApproveApi.prototype = {
     EditApp: function (res, seq, reqBody, logoSavePath, isDebug) {
         var resp = new ResponseFormatter(isDebug);
         console.log(JSON.stringify(reqBody, null, 4));
+
+        var newAppLogo = reqBody.applogoname;
+        if (!reqBody.applogoname.includes("http:")) {
+          newAppLogo = logoSavePath + newAppLogo;
+        }
+
+        var newNgoLogo = reqBody.ngologoname;
+        if (!reqBody.ngologoname.includes("http:")) {
+          newNgoLogo = logoSavePath + newNgoLogo;
+        }
+
         seq.query('CALL EditApp (:appid,  :apname , :categoryid , :appwebsite , :appfacebook , :appgithub , :appdescription , :apptechnologies , :appcreationdate , :applogo , :apptags , :ngname , :ngophone , :ngoemail , :ngofacebook , :ngogoogleplus , :ngolinkedin , :ngotwitter , :ngoinstagram , :ngodescription , :ngologo, :ngoid, :appisactive );', {
             replacements: {
                 appid: reqBody.appid,
@@ -62,7 +73,7 @@ ApproveApi.prototype = {
                 appdescription: reqBody.appdescription || null,
                 apptechnologies: reqBody.apptechnologies || null,
                 appcreationdate: reqBody.appcreationdate || null,
-                applogo: logoSavePath + reqBody.applogoname || null,
+                applogo: newAppLogo || null,
                 apptags: reqBody.apphashtags || null,
                 ngname: reqBody.ngoname,
                 ngophone: reqBody.ngophone || null,
@@ -73,13 +84,13 @@ ApproveApi.prototype = {
                 ngotwitter: reqBody.ngotwitter || null,
                 ngoinstagram: reqBody.ngoinstagram || null,
                 ngodescription: reqBody.ngodescription || null,
-                ngologo: logoSavePath + reqBody.ngologoname || null,
+                ngologo: newNgoLogo || null,
                 ngoid: reqBody.ngoid,
                 appisactive: reqBody.isActive === true ? 1 : 0
             }
         }).then(function (rez) {
             resp.FormatFromResult(res, rez[0].result);
-            
+
         })
             .catch(
                 function (err) {
