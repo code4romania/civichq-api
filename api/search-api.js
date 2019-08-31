@@ -8,10 +8,11 @@ function SearchApi() {
         'n.Logo as NgoLogoName, ' +
         'a.Technologies, ' +
         'case when a.IsActive = 1 then \'true\' else \'false\' end as IsActive ' +
+        'case when a.IsArchived = 1 then \'true\' else \'false\' end as IsArchived ' +
         'FROM Apps a '
     + ' INNER JOIN Categories c on a.CategoryId = c.Id '
     + ' INNER JOIN Ngos n on a.NgoId = n.Id ';
-    this.baseWhere = ' WHERE a.IsApproved = 1 AND c.IsActive = 1 ';
+    this.baseWhere = ' WHERE a.IsApproved = 1 AND c.IsActive = 1 AND a.IsArchived = 0 ';
     this.baseOrderBy = ' ORDER BY c.Ordinal, a.AppName';
 }
 
