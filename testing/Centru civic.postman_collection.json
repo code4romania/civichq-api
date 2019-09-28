@@ -16,10 +16,6 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/api/categories",
 					"protocol": "http",
@@ -46,10 +42,6 @@
 						"value": "{{token}}"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/api/technologies",
 					"protocol": "http",
@@ -76,10 +68,6 @@
 						"value": "{{token}}"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/api/approvedapps",
 					"protocol": "http",
@@ -106,10 +94,6 @@
 						"value": "{{token}}"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/api/apps",
 					"protocol": "http",
@@ -136,10 +120,6 @@
 						"value": "{{token}}"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/api/search/ap",
 					"protocol": "http",
@@ -167,10 +147,6 @@
 						"value": "{{token}}"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/api/tags/a",
 					"protocol": "http",
@@ -198,10 +174,6 @@
 						"value": "{{token}}"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/api/appprofile/3",
 					"protocol": "http",
@@ -297,6 +269,41 @@
 			"response": []
 		},
 		{
+			"name": "DELETE archive app",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/deleteapp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"deleteapp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "POST add app",
 			"request": {
 				"method": "POST",
@@ -331,5 +338,6 @@
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
