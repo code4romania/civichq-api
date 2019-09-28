@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `civichq`.`Apps` (
   `Tags` VARCHAR(150) NULL DEFAULT NULL,
   `Technologies` VARCHAR(150) NULL DEFAULT NULL,
   `IsMaster` TINYINT(1) NULL DEFAULT NULL,
+  `IsArchived` TINYINT(1) NULL DEFAULT 0,
   `IsActive` TINYINT(1) NULL DEFAULT NULL
   PRIMARY KEY (`Id`),
   UNIQUE INDEX `Id` (`Id` ASC))
@@ -214,7 +215,8 @@ IN ngotwitter varchar(1000),
 IN ngoinstagram varchar(1000),
 IN ngodescription varchar(500)  CHARSET utf8 ,
 IN ngologo varchar(150)),
-IN appisactive tinyint(1))
+IN appisactive tinyint(1),
+IN appisarchived tinyint(1))
 BEGIN
 DECLARE ngoId INT DEFAULT 0;
 DECLARE appId INT DEFAULT 0;
@@ -284,7 +286,8 @@ START TRANSACTION;
 		`Logo`,
 		`Tags`,
 		`IsMaster`,
-    `IsActive`)
+    `IsActive`,
+		`IsArchived`)
 		VALUES
 		(
 		apname,
@@ -301,7 +304,8 @@ START TRANSACTION;
 		applogo,
 		apptags,
 		0,
-    appisactive);
+    appisactive,
+		0);
 
         CALL InsertTags(apptags);
 

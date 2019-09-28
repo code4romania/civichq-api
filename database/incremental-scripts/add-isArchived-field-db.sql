@@ -1,4 +1,4 @@
-ALTER TABLE `civichq`.`Apps` ADD COLUMN `IsArchived` TINYINT(1) NULL DEFAULT 1 AFTER `IsMaster`;
+ALTER TABLE `civichq`.`Apps` ADD COLUMN `IsArchived` TINYINT(1) NULL DEFAULT 0 AFTER `IsMaster`;
 
 -- -----------------------------------------------------
 -- procedure AddApp
@@ -29,7 +29,7 @@ IN ngotwitter varchar(1000),
 IN ngoinstagram varchar(1000),
 IN ngodescription varchar(500)  CHARSET utf8 ,
 IN ngologo varchar(150),
-IN appisactive tinyint(1))
+IN appisactive tinyint(1),
 IN appisarchived tinyint(1))
 BEGIN
 DECLARE ngoId INT DEFAULT 0;
@@ -117,7 +117,7 @@ START TRANSACTION;
 		apptags,
 		0,
 		appisactive,
-		appisarchived);
+		0);
 
         CALL InsertTags(apptags);
 
