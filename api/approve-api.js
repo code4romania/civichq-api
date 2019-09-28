@@ -48,6 +48,27 @@ ApproveApi.prototype = {
 
     },
 
+    DeleteApp: function (res, seq, appId) {
+        var query = 'UPDATE Apps set IsArchived = 1 WHERE Id = :appId ;';
+
+        var p1 = seq.query(query,
+            {
+                replacements: { appId: appId },
+                type: seq.QueryTypes.UPDATE
+            }
+        )
+            .then(function (rez) {
+                res.json({ success: true });
+            },
+            function (err) {
+                res.send({
+                    success: false,
+                    error: err
+                });
+            });
+
+    },
+
     EditApp: function (res, seq, reqBody, logoSavePath, isDebug) {
         var resp = new ResponseFormatter(isDebug);
         console.log(JSON.stringify(reqBody, null, 4));

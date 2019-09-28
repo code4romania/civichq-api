@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = appConfig.get('port');        // set our port
-var routesToAuthorize = ['/api/updateapp', '/api/appprofile',
+var routesToAuthorize = ['/api/updateapp', 'api/deleteapp', '/api/appprofile',
                         '/api/uploadlogo', '/api/addapp',
                         '/api/masterprofile', '/api/categories',
                         '/api/approvedapps', '/api/tags', '/api/search', '/api/editapp'];
@@ -269,6 +269,17 @@ router.route('/updateapp/:appid')
 
     });
 
+router.route('/deleteapp/:appid')
+    .delete(function (req, res) {
+
+        var appId = req.params.appid;
+
+        //console.log('updating app id ' + appId);
+        var api = new ApproveApi();
+
+        api.DeleteApp(res, sequelize, appId);
+
+    });
 
 router.route('/editapp')
     .put(
