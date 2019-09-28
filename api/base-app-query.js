@@ -14,6 +14,7 @@ function BaseAppQuery() {
         'a.github as \'appdetail.github\',' +
         'case when a.IsApproved = 1 then \'true\' else \'false\' end AS \'appdetail.isapproved\',' +
         'case when a.IsActive = 1 then \'true\' else \'false\' end AS \'appdetail.isactive\',' +
+        'case when a.IsArchived = 1 then \'true\' else \'false\' end AS \'appdetail.isarchived\',' +
         'n.Id as \'ngodetail.id\',' +
         'n.NgoName as \'ngodetail.name\',' +
         'n.phone as \'ngodetail.phone\',' +
