@@ -271,7 +271,7 @@
 		{
 			"name": "DELETE archive app",
 			"request": {
-				"method": "PUT",
+				"method": "DELETE",
 				"header": [
 					{
 						"key": "Content-Type",
