@@ -23,7 +23,7 @@ This repo holds the API of Centru Civic.
 
 ## Contributing
 
-This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.MD).
+This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.md).
 
 If your changes involve updates in the DB please update the database/InitializeDB.sql scrips and also create a new incremental script in the database/incremental-scripts folder.
 
