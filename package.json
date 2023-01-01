@@ -5,7 +5,7 @@
   "dependencies": {
     "aws-sdk": "^2.6.15",
     "body-parser": "^1.15.2",
-    "config": "^1.21.0",
+    "config": "^3.3.8",
     "core-js": "^2.4.0",
     "express": "^4.14.0",
     "express-jwt": "^5.0.0",
